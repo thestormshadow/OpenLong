@@ -7,7 +7,7 @@ The project is split between three servers: an account server, game server and a
 This still a work in progress and is not recommended to starters. No support will be given to creating events, NPCs or anything like that. But if you want to work with Canyon you may report bugs and we will keep the main repository updated with bug fixes to whoever wants to try it.
 When the live server leaves the Beta Stage, we will start keeping stable versions of Canyon in the main main repository, if you download from development make sure you know what you are doing and that you are ready to face bugs.
 
-Fuente oficial: https://gitlab.com/world-conquer-online/canyon/long/-/tree/develop?ref_type=heads
+Official source: https://gitlab.com/world-conquer-online/canyon/long/-/tree/develop?ref_type=heads
 
 Author: Felipe Vieira Vendramini
 
