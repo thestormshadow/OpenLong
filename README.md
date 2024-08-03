@@ -38,6 +38,7 @@ When creating a new character in the conquer_account table, create the id for ex
 - Arenas (I think only work the Qualifier Standard)
 - House Furnitures (Incomplete)
 - Titles (Not from Wardrobe, that are fine)
+- Lottery (Not working 100% fine)
 
 
 Official source: https://gitlab.com/world-conquer-online/canyon/long/-/tree/develop?ref_type=heads
