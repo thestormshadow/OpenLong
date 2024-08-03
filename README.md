@@ -8,5 +8,7 @@ This still a work in progress and is not recommended to starters. No support wil
 When the live server leaves the Beta Stage, we will start keeping stable versions of Canyon in the main main repository, if you download from development make sure you know what you are doing and that you are ready to face bugs.
 
 Fuente oficial: https://gitlab.com/world-conquer-online/canyon/long/-/tree/develop?ref_type=heads
+
 Author: Felipe Vieira Vendramini
+
 Updates Author & Fix: Javier Vargas Ruiz & Team
