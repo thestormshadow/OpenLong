@@ -9,6 +9,8 @@ When the live server leaves the Beta Stage, we will start keeping stable version
 
 -> Source Upgrade to version 6609 
 
+When creating a new character in the conquer_account table, create the id for example 1 and change it to 1000001
+
 Official source: https://gitlab.com/world-conquer-online/canyon/long/-/tree/develop?ref_type=heads
 
 Author: Felipe Vieira Vendramini
