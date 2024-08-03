@@ -1,0 +1,17 @@
+{
+  "Database": {
+    "Hostname": "localhost",
+    "Username": "root",
+    "Password": "1234",
+    "Schema": "cq6135v2",
+    "Port": 3306
+  },
+  "Ai": {
+    "ServerId": "03835b48-da5e-44fb-be9b-ebbf1a6d1351",
+    "Name": "WarLord",
+    "IPAddress": "25.47.231.41",
+    "Port": 8650,
+    "Username": "yD3Ni6tMW1NNU1QH",
+    "Password": "jETqqIKi9LuFvOgu"
+  }
+}

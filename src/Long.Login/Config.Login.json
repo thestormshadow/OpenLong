@@ -1,0 +1,31 @@
+{
+  "Database": {
+    "Hostname": "localhost",
+    "Username": "root",
+    "Password": "1234",
+    "Schema": "account_cq",
+    "Port": 3306
+  },
+  "AllowedServers": [
+    "94390aa0-c75d-11ed-9586-0050560401e2"
+  ],
+  "Login": {
+    "Port": 9958,
+    "Listener": {
+      "RecvProcessors": 1,
+      "SendProcessors": 1
+    }
+  },
+  "Game": {
+    "Port": 9865,
+    "Encryption": {
+      "Key": "M6gkSkSNXMZeyIwNc7YBUj42wuyh686pYmAK5Vg9L30=",
+      "EncryptIV": "K7wCbVKECO1noApl1laftA==",
+      "DecryptIV": "dGZIN8XB4o4QgNJ5YXc1Sw=="
+    },
+    "Listener": {
+      "RecvProcessors": 1,
+      "SendProcessors": 1
+    }
+  }
+}

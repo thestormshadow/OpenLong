@@ -1,0 +1,1476 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="StrAccuracyActiveP" xml:space="preserve">
+    <value>Accuracy for {0} seconds, your hit rate will be increased by {1} percent.</value>
+  </data>
+  <data name="StrAccuracyActiveT" xml:space="preserve">
+    <value>Accuracy for {0} seconds, your hit rate will be increased by {1} times.</value>
+  </data>
+  <data name="StrAchievementReceive" xml:space="preserve">
+    <value>{0} achieved [Achievement {1}]!</value>
+  </data>
+  <data name="StrAnotherLoginOtherIp" xml:space="preserve">
+    <value>Atention! Your account may have been hacked! Someone outside of your network is trying to login.</value>
+  </data>
+  <data name="StrAnotherLoginSameIp" xml:space="preserve">
+    <value>Atention! Your account is trying to login from inside of your network!</value>
+  </data>
+  <data name="StrArenicMatchDraw" xml:space="preserve">
+    <value>{0} and {1} has both lost the Qualifier match on a Draw.</value>
+  </data>
+  <data name="StrArenicMatchEnd" xml:space="preserve">
+    <value>{0} has defeaded {1} in the Qualifier and is currently ranked No. {2}.</value>
+  </data>
+  <data name="StrArrestmentPkMode" xml:space="preserve">
+    <value>Capture mode: Slay monsters, black/blue-name criminals, and cross-server players.</value>
+  </data>
+  <data name="StrAuctionSellSpiritNotice" xml:space="preserve">
+    <value>{0} with superior attributes has been put up at AuctionManager (Market 187,179). Hurry and grab it at Auction!</value>
+  </data>
+  <data name="StrAwardEliteSponsor" xml:space="preserve">
+    <value>{0} has won the match! You will receive {1} bonus silver from your wager!</value>
+  </data>
+  <data name="StrAwardEliteSponsor1" xml:space="preserve">
+    <value>You received your winnings.</value>
+  </data>
+  <data name="StrAwardVirtue" xml:space="preserve">
+    <value>{0} has earned {1} virtue points for helping newbies.</value>
+  </data>
+  <data name="StrBonus" xml:space="preserve">
+    <value>Congratulations! You have got {0} prizes.  Please find PrizeNPC in the market (185,170) to claim your rewards!</value>
+  </data>
+  <data name="StrBoothAlreadyCreated" xml:space="preserve">
+    <value>You already have a booth set up.</value>
+  </data>
+  <data name="StrBoothBought" xml:space="preserve">
+    <value>{0} purchased successfully for {1} {2}.</value>
+  </data>
+  <data name="StrBoothMapCantSetup" xml:space="preserve">
+    <value>You cannot set up a shop in this map.</value>
+  </data>
+  <data name="StrBoothMaxItems" xml:space="preserve">
+    <value>You cannot add more than 20 items to your shop.</value>
+  </data>
+  <data name="StrBoothNoShop" xml:space="preserve">
+    <value>You don't have a booth.</value>
+  </data>
+  <data name="StrBoothRegionCantSetup" xml:space="preserve">
+    <value>You cannot set up a shop in this area.</value>
+  </data>
+  <data name="StrBoothSold" xml:space="preserve">
+    <value>{0} purchased your {1} for {2} {3}.</value>
+  </data>
+  <data name="StrBotCaptchaMessage" xml:space="preserve">
+    <value>If you don't reply to this captcha or give me the wrong answer you'll be disconnected! Press OK if this equation is correct or Cancel if not. {0} + {1} = {2}?</value>
+  </data>
+  <data name="StrBotjail" xml:space="preserve">
+    <value>You have been sent to the botjail!</value>
+  </data>
+  <data name="StrBreakFriend" xml:space="preserve">
+    <value>{0} broke up friendship with {1}.</value>
+  </data>
+  <data name="StrBroadcastBecomeCountry" xml:space="preserve">
+    <value>Union {0} ranked No.1 with {1} Gold Bricks, and upgraded to Kingdom.</value>
+  </data>
+  <data name="StrBroadcastMakeSocket" xml:space="preserve">
+    <value>{0} succeeded in using the ToughDrill to make a second socket on the item.</value>
+  </data>
+  <data name="StrCannotEnterTG" xml:space="preserve">
+    <value>You are not blessed and enter the Offline Training Ground.</value>
+  </data>
+  <data name="StrCannotPickupOtherItems" xml:space="preserve">
+    <value>Cannot pick up others items.</value>
+  </data>
+  <data name="StrCannotUpgradeItemLevel" xml:space="preserve">
+    <value>This item level cannot be upgraded. Check your requirements.</value>
+  </data>
+  <data name="StrChangeName" xml:space="preserve">
+    <value>{0} has changed the name into {1}!</value>
+  </data>
+  <data name="StrChangeNameEmoneyNotEnough" xml:space="preserve">
+    <value>You don`t have the 810 CPs to change your name!</value>
+  </data>
+  <data name="StrChangeNameNoChange" xml:space="preserve">
+    <value>Your name has not been changed!</value>
+  </data>
+  <data name="StrChangeNameSuccess" xml:space="preserve">
+    <value>The name has been changed.</value>
+  </data>
+  <data name="StrCheatingProgram" xml:space="preserve">
+    <value>You've been caught cheating by the system.</value>
+  </data>
+  <data name="StrClearInventoryCloseBoxes" xml:space="preserve">
+    <value>Please close other message boxes before requesting to clear inventory.</value>
+  </data>
+  <data name="StrClearInventoryConfirmation" xml:space="preserve">
+    <value>Are you sure you want to clear your inventory? This action is not reversible.</value>
+  </data>
+  <data name="StrClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="StrComposeItemMaxComposition" xml:space="preserve">
+    <value>This item is already on it's maximum composition level.</value>
+  </data>
+  <data name="StrComposeOverpowerFemale" xml:space="preserve">
+    <value>Congratulations! {0} has upgraded her {1} to +{2}!</value>
+  </data>
+  <data name="StrComposeOverpowerMale" xml:space="preserve">
+    <value>Congratulations! {0} has upgraded his {1} to +{2}!</value>
+  </data>
+  <data name="StrConquerPoints" xml:space="preserve">
+    <value>CPs</value>
+  </data>
+  <data name="StrConquerPointsMono" xml:space="preserve">
+    <value>CPs (B)</value>
+  </data>
+  <data name="StrDamagedRepair" xml:space="preserve">
+    <value>{0} has been severely damaged. Please repair it soon, otherwise it will break.</value>
+  </data>
+  <data name="StrDead" xml:space="preserve">
+    <value>You are already dead.</value>
+  </data>
+  <data name="StrDeleteInvalidPassword" xml:space="preserve">
+    <value>Invalid password.</value>
+  </data>
+  <data name="StrDispatchXp" xml:space="preserve">
+    <value>{0} roared and the teammates XP boosts immediatly.</value>
+  </data>
+  <data name="StrDodgeActiveP" xml:space="preserve">
+    <value>Dodge for {0} seconds, your dodge will be increased by {1} percent.</value>
+  </data>
+  <data name="StrDodgeActiveT" xml:space="preserve">
+    <value>Dodge for {0} seconds, your dodge will be increased by {1} times.</value>
+  </data>
+  <data name="StrDragonBallDropped" xml:space="preserve">
+    <value>{0} has dropped a Dragon Ball in {1}.</value>
+  </data>
+  <data name="StrDropEquip" xml:space="preserve">
+    <value>{0} items have been detained by {1}`s help. Please find {2} ({3}, {4}) to redeem within 7 days, or they will be awarded to that player.</value>
+  </data>
+  <data name="StrDropEquipment" xml:space="preserve">
+    <value>{0} has dropped part of his equipment for dying as a criminal.</value>
+  </data>
+  <data name="StrDurabilityRepair" xml:space="preserve">
+    <value>Durability of {0} is too low. Please repair it to prevent further damaging.</value>
+  </data>
+  <data name="StrEliteCompeteWin0" xml:space="preserve">
+    <value>({0}){1} in the Elite PK Tournament for level {2} defeated ({3}){4}.</value>
+  </data>
+  <data name="StrEliteCompeteWin1" xml:space="preserve">
+    <value>{0} in the Elite PK Tournament for level {1} defeated ({2}){3}.</value>
+  </data>
+  <data name="StrEliteCompeteWin2" xml:space="preserve">
+    <value>({0}){1} in the Elite PK Tournament for level {2} defeated {3}.</value>
+  </data>
+  <data name="StrEliteCompeteWin3" xml:space="preserve">
+    <value>{0} in the Elite PK Tournament for level {1} defeated {2}.</value>
+  </data>
+  <data name="StrEmbedNoRequiredItem" xml:space="preserve">
+    <value>You don't have the required item.</value>
+  </data>
+  <data name="StrEmbedNoSecondSocket" xml:space="preserve">
+    <value>This item doesn't have the second socket open.</value>
+  </data>
+  <data name="StrEmbedSocketAlreadyFilled" xml:space="preserve">
+    <value>This socket already have a gem in it.</value>
+  </data>
+  <data name="StrEmbedTargetNoSocket" xml:space="preserve">
+    <value>The target item doesn't have a socket.</value>
+  </data>
+  <data name="StrEndEliteCompete1" xml:space="preserve">
+    <value>As no one has wagered against {0}, your wager on {1} has been returned.</value>
+  </data>
+  <data name="StrEndEliteCompete2" xml:space="preserve">
+    <value>{0} has received overwhelming support!</value>
+  </data>
+  <data name="StrEndEliteCompete3" xml:space="preserve">
+    <value>Current wager for {0} is {1}. Current wager for {2} is {3}. This should be an exciting matchup!</value>
+  </data>
+  <data name="StrEquipLockAlreadyLocked" xml:space="preserve">
+    <value>This item is already locked.</value>
+  </data>
+  <data name="StrEquipLockAlreadyUnlocking" xml:space="preserve">
+    <value>This equipment is already unlocking.</value>
+  </data>
+  <data name="StrEquipLockCantLock" xml:space="preserve">
+    <value>This equipment cannot be locked.</value>
+  </data>
+  <data name="StrEquipLockNotLocked" xml:space="preserve">
+    <value>This equipment is not locked.</value>
+  </data>
+  <data name="StrEventCannotEnterTwoEvents" xml:space="preserve">
+    <value>You cannot enter on another event before leave the current one.</value>
+  </data>
+  <data name="StrExpired" xml:space="preserve">
+    <value>Expired</value>
+  </data>
+  <data name="StrExpLostBySynFund" xml:space="preserve">
+    <value>The Guild Fund was used to offset your EXP loss ({0}).</value>
+  </data>
+  <data name="StrExpPotionInUse" xml:space="preserve">
+    <value>You are already using an EXP Potion with better power than this. Wait for the old one to finish.</value>
+  </data>
+  <data name="StrFamilyAbdicate" xml:space="preserve">
+    <value>{0} has abdicated the leadership of the family to {1}.</value>
+  </data>
+  <data name="StrFamilyCreate" xml:space="preserve">
+    <value>{0} has created family {1} successfully.</value>
+  </data>
+  <data name="StrFamilyDefaultAnnounce" xml:space="preserve">
+    <value>This is a new family.</value>
+  </data>
+  <data name="StrFamilyNotEnoughTime" xml:space="preserve">
+    <value>Your clan is too young to challenge a city. Come back tomorrow.</value>
+  </data>
+  <data name="StrFemaleMateLogin" xml:space="preserve">
+    <value>Your wife is online.</value>
+  </data>
+  <data name="StrFetchFamilyNpcExpSuccess" xml:space="preserve">
+    <value>{0} has claimed the prize for domination of {1} and obtained Level {2} {3:0.00}% EXP.</value>
+  </data>
+  <data name="StrFetchFamilyNpcIncomeSuccess" xml:space="preserve">
+    <value>The Clan Leader {0} has claimed the revenue of {1}!</value>
+  </data>
+  <data name="StrFlowerGmPromptAll" xml:space="preserve">
+    <value>{0} has sent {1} {2} to {3}.</value>
+  </data>
+  <data name="StrFlowerHaveSentToday" xml:space="preserve">
+    <value>You already sent flowers today.</value>
+  </data>
+  <data name="StrFlowerLevelTooLow" xml:space="preserve">
+    <value>You haven't reached level 50!</value>
+  </data>
+  <data name="StrFlowerNameLily" xml:space="preserve">
+    <value>Orchid</value>
+  </data>
+  <data name="StrFlowerNameRed" xml:space="preserve">
+    <value>Red Rose</value>
+  </data>
+  <data name="StrFlowerNameTulip" xml:space="preserve">
+    <value>Tulip</value>
+  </data>
+  <data name="StrFlowerNameWhite" xml:space="preserve">
+    <value>Lily</value>
+  </data>
+  <data name="StrFlowerReceiverNotFemale" xml:space="preserve">
+    <value>You can only send flowers to female players.</value>
+  </data>
+  <data name="StrFlowerReceiverPrompt" xml:space="preserve">
+    <value>{0} send you some flowers.</value>
+  </data>
+  <data name="StrFlowerSenderNotAlive" xml:space="preserve">
+    <value>You can't send flowers when you're dead.</value>
+  </data>
+  <data name="StrFlowerSenderNotMale" xml:space="preserve">
+    <value>Only male players can send flowers!</value>
+  </data>
+  <data name="StrFlowerSendSuccess" xml:space="preserve">
+    <value>You have sent flowers.</value>
+  </data>
+  <data name="StrForbiddenLeagueName" xml:space="preserve">
+    <value>This name already exists. Please enter a new one.</value>
+  </data>
+  <data name="StrFreePkMode" xml:space="preserve">
+    <value>Free PK mode. You can attack monster and all players.</value>
+  </data>
+  <data name="StrFriendListFull" xml:space="preserve">
+    <value>Your friend list is full.</value>
+  </data>
+  <data name="StrGetEmoneyBonus" xml:space="preserve">
+    <value>{0} has arrested {1}, detained the items and obtained {2} CPs as rewards.</value>
+  </data>
+  <data name="StrGetEquipBonus" xml:space="preserve">
+    <value>{0} has arrested {1}, and obtained the detained items {2} as rewards after 7 days term.</value>
+  </data>
+  <data name="StrGiftJades" xml:space="preserve">
+    <value>Jades</value>
+  </data>
+  <data name="StrGiftKisses" xml:space="preserve">
+    <value>Kisses</value>
+  </data>
+  <data name="StrGiftLoveLetters" xml:space="preserve">
+    <value>Love Letters</value>
+  </data>
+  <data name="StrGiftSameGender" xml:space="preserve">
+    <value>This gift cannot be sent.</value>
+  </data>
+  <data name="StrGiftSendSuccess" xml:space="preserve">
+    <value>You have sent some gifts.</value>
+  </data>
+  <data name="StrGiftTinsOfBeer" xml:space="preserve">
+    <value>Tins of Beer</value>
+  </data>
+  <data name="StrGoToJail" xml:space="preserve">
+    <value>{0} has killed {1} and sent him/her to jail.</value>
+  </data>
+  <data name="StrGuardYouPay" xml:space="preserve">
+    <value>You`ll pay for what you`ve done!</value>
+  </data>
+  <data name="StrGuideBetray" xml:space="preserve">
+    <value>Mentor {0} has abandoned you. You cannot take a new mentor for 3 days.</value>
+  </data>
+  <data name="StrGuideBetrayTutor" xml:space="preserve">
+    <value>Your student {0} has abandoned you.</value>
+  </data>
+  <data name="StrGuideDeclined" xml:space="preserve">
+    <value>The target declined your request.</value>
+  </data>
+  <data name="StrGuideExpelStudent" xml:space="preserve">
+    <value>Your mentor has deserted you.</value>
+  </data>
+  <data name="StrGuideExpelTutor" xml:space="preserve">
+    <value>{0} will not be your apprentice anymore.</value>
+  </data>
+  <data name="StrGuideSendStudent" xml:space="preserve">
+    <value>You have sent the apprenticeship request.</value>
+  </data>
+  <data name="StrGuideSendTutor" xml:space="preserve">
+    <value>You have sent the apprentice request.</value>
+  </data>
+  <data name="StrGuideStudentHighLevel" xml:space="preserve">
+    <value>The target`s level is too high to be your apprentice.</value>
+  </data>
+  <data name="StrGuideStudentHighLevel1" xml:space="preserve">
+    <value>The target`s level is too low to be your mentor.</value>
+  </data>
+  <data name="StrGuideStudentLogin" xml:space="preserve">
+    <value>Your student, {0}, has logged in.</value>
+  </data>
+  <data name="StrGuideTooManyStudents" xml:space="preserve">
+    <value>You have too many apprentices, and cannot take another.</value>
+  </data>
+  <data name="StrGuideTooManyStudents1" xml:space="preserve">
+    <value>The target has too many apprentices. Please try another.</value>
+  </data>
+  <data name="StrGuideTutorLogin" xml:space="preserve">
+    <value>Your mentor, {0}, has logged in.</value>
+  </data>
+  <data name="StrGuideTutorLowLevel" xml:space="preserve">
+    <value>You can't take an apprentice until level 70.</value>
+  </data>
+  <data name="StrGuideTutorLowLevel1" xml:space="preserve">
+    <value>A person under level 70 cannot be your mentor.</value>
+  </data>
+  <data name="StrHasDetainEquip" xml:space="preserve">
+    <value>Some of your items have been detained. Please redeem them within 7 days. Otherwise, you cannot get them back.</value>
+  </data>
+  <data name="StrHasEmoneyBonus" xml:space="preserve">
+    <value>Thank you for arresting {0}. Please find {1} ({2}, {3}) in the market to get rewards.</value>
+  </data>
+  <data name="StrHasEquipBonus" xml:space="preserve">
+    <value>Thank you for arresting {0}, whose items have not been redeemed within 7 days. Find {1} ({2}, {3}) to get these items as rewards.</value>
+  </data>
+  <data name="StrHaveChangeName" xml:space="preserve">
+    <value>You can`t change your name any more.</value>
+  </data>
+  <data name="StrInvalidCoordinate" xml:space="preserve">
+    <value>Invalid coordinate.</value>
+  </data>
+  <data name="StrInvalidMsg" xml:space="preserve">
+    <value>Invalid message.</value>
+  </data>
+  <data name="StrInviteSent" xml:space="preserve">
+    <value>Team invitation has been sent.</value>
+  </data>
+  <data name="StrItem" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="StrItemCannotBeStored" xml:space="preserve">
+    <value>This item cannot be stored.</value>
+  </data>
+  <data name="StrItemCannotDiscard" xml:space="preserve">
+    <value>{0} cannot be discarded.</value>
+  </data>
+  <data name="StrItemCannotImprove" xml:space="preserve">
+    <value>This item cannot be improved.</value>
+  </data>
+  <data name="StrItemErrMaxLevel" xml:space="preserve">
+    <value>The item is already at the maximum level.</value>
+  </data>
+  <data name="StrItemErrMaxQuality" xml:space="preserve">
+    <value>This item is at maximum quality or cannot be upgraded.</value>
+  </data>
+  <data name="StrItemErrNoDragonBall" xml:space="preserve">
+    <value>You don't have a Dragon Ball.</value>
+  </data>
+  <data name="StrItemErrNotEnoughDragonBalls" xml:space="preserve">
+    <value>You don't have {0} Dragon Balls.</value>
+  </data>
+  <data name="StrItemErrNotEnoughLevel" xml:space="preserve">
+    <value>The equipment level is higher than yours.</value>
+  </data>
+  <data name="StrItemErrNotEnoughMeteors" xml:space="preserve">
+    <value>You don't have {0} Meteors.</value>
+  </data>
+  <data name="StrItemErrRepairItem" xml:space="preserve">
+    <value>Please repair your item before upgrading.</value>
+  </data>
+  <data name="StrItemErrRepairMeteor" xml:space="preserve">
+    <value>You need 5 Meteors to repair your broken equipment.</value>
+  </data>
+  <data name="StrItemErrUpgradeFixed" xml:space="preserve">
+    <value>Fixed equipment cannot be improved.</value>
+  </data>
+  <data name="StrItemNotFound" xml:space="preserve">
+    <value>Target item not found.</value>
+  </data>
+  <data name="StrJiangHuPkMode" xml:space="preserve">
+    <value>Jiang Hu mode: Slay Jiang Hu fighters, black/blue-name criminals, and cross-server players.</value>
+  </data>
+  <data name="StrKickout" xml:space="preserve">
+    <value>You have been kicked from the game. Reason: {0}.</value>
+  </data>
+  <data name="StrKillerEquip" xml:space="preserve">
+    <value>You helped detain {0} items. If he/she redeems them within 7 days, you will get what he/she paid as rewards. If not, you will get these items.</value>
+  </data>
+  <data name="StrKillingExperience" xml:space="preserve">
+    <value>{0} extra experience points awarded by killing monsters.</value>
+  </data>
+  <data name="StrKillingTooMuch" xml:space="preserve">
+    <value>You are killing too much! You may lose your equipment if killed.</value>
+  </data>
+  <data name="StrKillOSUser" xml:space="preserve">
+    <value>{0} fought in the {1} and defeated [{2}]`s {3}.</value>
+  </data>
+  <data name="StrLayNpcSuperPosition" xml:space="preserve">
+    <value>You cannot lay an NPC there.</value>
+  </data>
+  <data name="StrLayNpcSynTransInvalidMap" xml:space="preserve">
+    <value>You cannot set a transportation NPC in this map.</value>
+  </data>
+  <data name="StrLeaderKingChange" xml:space="preserve">
+    <value>For {0}`s brilliance and great contributions, the Emperor announced to abdicate the leadership to {1}.</value>
+  </data>
+  <data name="StrLeagueAppointImperialCourt" xml:space="preserve">
+    <value>The Emperor appointed {0} to be {1}!</value>
+  </data>
+  <data name="StrLeagueAppointPalaceGuards" xml:space="preserve">
+    <value>Emperor appointed {0} to be an Imperial Guard!</value>
+  </data>
+  <data name="StrLeagueBeAppointedImperialCourt" xml:space="preserve">
+    <value>Congrats! You were appointed to be {0}!</value>
+  </data>
+  <data name="StrLeagueBeAppointedPalaceGuards" xml:space="preserve">
+    <value>The Emperor appointed you to be an Imperial Guard!</value>
+  </data>
+  <data name="StrLeagueBeDimissedPalaceGuards" xml:space="preserve">
+    <value>The Emperor dismissed you from Imperial Guards.</value>
+  </data>
+  <data name="StrLeagueBeDismiss" xml:space="preserve">
+    <value>You were expelled from the Union by {0}.</value>
+  </data>
+  <data name="StrLeagueBeDismissedImperialCourt" xml:space="preserve">
+    <value>The Emperor dismissed you from the position.</value>
+  </data>
+  <data name="StrLeagueBroadcastTitle" xml:space="preserve">
+    <value>{0}/{1}/{2} B.C., [{3}] [{4}] came into power with a title of `{5}`, astonishing the whole server with majestic spirit.</value>
+  </data>
+  <data name="StrLeagueCannotSetTitle" xml:space="preserve">
+    <value>Failed to operate. You`re not a Union Leader.</value>
+  </data>
+  <data name="StrLeagueCantAppointSelf" xml:space="preserve">
+    <value>His Majesty, you can`t appoint yourself.</value>
+  </data>
+  <data name="StrLeagueChangeManifesto" xml:space="preserve">
+    <value>Successfully edited the recruitment ads.</value>
+  </data>
+  <data name="StrLeagueCreateLeague" xml:space="preserve">
+    <value>{0} created a Union, {1}!</value>
+  </data>
+  <data name="StrLeagueDelSyn" xml:space="preserve">
+    <value>Successfully expelled Guild {0} from the Union.</value>
+  </data>
+  <data name="StrLeagueDismissSucess" xml:space="preserve">
+    <value>Successfully expelled {0} from the Union.</value>
+  </data>
+  <data name="StrLeagueInviteFail" xml:space="preserve">
+    <value>You can`t recruit heroes from different Unions.</value>
+  </data>
+  <data name="StrLeagueJoinSuccess" xml:space="preserve">
+    <value>{0} has pledged loyalty to Union {1}!</value>
+  </data>
+  <data name="StrLeagueLeaderChange" xml:space="preserve">
+    <value>{0} as the Union Leader has abdicated the leadership to {1}!</value>
+  </data>
+  <data name="StrLeagueLeaveSoon" xml:space="preserve">
+    <value>After quitting a Union, you need to wait {0} minutes to re-join.</value>
+  </data>
+  <data name="StrLeagueLeaveSuccess" xml:space="preserve">
+    <value>Successfully quit the Union!</value>
+  </data>
+  <data name="StrLeagueOtherLeagueUser" xml:space="preserve">
+    <value>His Majesty, you can only appoint the members of your Kingdom.</value>
+  </data>
+  <data name="StrLeagueOtherLowLevel" xml:space="preserve">
+    <value>The target to be appointed should reach at least Level 70.</value>
+  </data>
+  <data name="StrLeagueOtherNoVacancy" xml:space="preserve">
+    <value>You can`t appoint more for this official position.</value>
+  </data>
+  <data name="StrLeaguePkMode" xml:space="preserve">
+    <value>Union Mode: only attack players from other unions. Heroes in the Realm will auto-accept the Realm Mission.</value>
+  </data>
+  <data name="StrLeagueSetTitle" xml:space="preserve">
+    <value>You successfully set a title for your Kingdom!</value>
+  </data>
+  <data name="StrLeagueStateOfficialBeKill" xml:space="preserve">
+    <value>Oops! [{0}]`s {1}{2} was defeated by [{3}]`s {4}!</value>
+  </data>
+  <data name="StrLeagueUserOffline" xml:space="preserve">
+    <value>His Majesty, you can`t appoint the target since he/she is offline.</value>
+  </data>
+  <data name="StrLinePkNoLineSkillError" xml:space="preserve">
+    <value>You do not have any line skill learnt.</value>
+  </data>
+  <data name="StrLinePkNoLineWeaponError" xml:space="preserve">
+    <value>You are not wearing any line weapon.</value>
+  </data>
+  <data name="StrLinePkNoRightHandWeaponError" xml:space="preserve">
+    <value>You cannot join without a weapon in your right hand.</value>
+  </data>
+  <data name="StrLinePkNoWeaponError" xml:space="preserve">
+    <value>You are not wearing any weapon.</value>
+  </data>
+  <data name="StrLinePkSuccess" xml:space="preserve">
+    <value>{0} has reincarnated.</value>
+  </data>
+  <data name="StrLineSkillPkContentMail" xml:space="preserve">
+    <value>You won the Line Skill PK Tournament and awarded:\nConquer Points: {0}\n</value>
+  </data>
+  <data name="StrLineSkillPkSenderName" xml:space="preserve">
+    <value>Line Skill PK Manager</value>
+  </data>
+  <data name="StrLineSkillPktAnnounce" xml:space="preserve">
+    <value>{0} has joined the Line Skill Tournament.</value>
+  </data>
+  <data name="StrLineSkillPktAnnounceSyn" xml:space="preserve">
+    <value>{0} from {1} has joined the Line Skill Tournament.</value>
+  </data>
+  <data name="StrLineSkillPkTitleMail" xml:space="preserve">
+    <value>Your offline reward</value>
+  </data>
+  <data name="StrLineSkillPktOwnRank" xml:space="preserve">
+    <value>Me: {0:0}</value>
+  </data>
+  <data name="StrLineSkillPktTitleRank" xml:space="preserve">
+    <value>Line Skill PK Tournament</value>
+  </data>
+  <data name="StrLineSkillPktUsrRank" xml:space="preserve">
+    <value>Nº {0} - {1} - {2:0}</value>
+  </data>
+  <data name="StrLoseEliteSponsor" xml:space="preserve">
+    <value>{0} lost in today`s Elite PK Tournament. You lost your wager.</value>
+  </data>
+  <data name="StrLotteryHigh" xml:space="preserve">
+    <value>{0} has won {1} from the Lottery.</value>
+  </data>
+  <data name="StrLotteryLimit" xml:space="preserve">
+    <value>You have played 10 times in the lottery today already. Please come back again tomorrow. Take back your Lottery Tickets.</value>
+  </data>
+  <data name="StrLotteryLow" xml:space="preserve">
+    <value>You won {0} from the Lottery.</value>
+  </data>
+  <data name="StrLuckyGuyNoDuraDown" xml:space="preserve">
+    <value>Lucky! Your equipment durability didn't decrease after that fail.</value>
+  </data>
+  <data name="StrLuckyGuyQuintuple" xml:space="preserve">
+    <value>Lucky! Your experience has been multiplied by 5 times.</value>
+  </data>
+  <data name="StrLuckyGuySuccessUpgrade" xml:space="preserve">
+    <value>Lucky! Your equipment has been upgraded successfully.</value>
+  </data>
+  <data name="StrLuckyGuySuccessUplevel" xml:space="preserve">
+    <value>Lucky! Your equipment has been leveled successfully.</value>
+  </data>
+  <data name="StrMacrojail" xml:space="preserve">
+    <value>You have been sent to the macrojail!</value>
+  </data>
+  <data name="StrMailAuctionAuctionedBuyerContent" xml:space="preserve">
+    <value>Your bid has awarded the item.\nItem: {0}\nSeller: {1}\nPrice: {2}</value>
+  </data>
+  <data name="StrMailAuctionAuctionedBuyerTitle" xml:space="preserve">
+    <value>Auctioned: [{0}]</value>
+  </data>
+  <data name="StrMailAuctionAuctionedCancelledContent" xml:space="preserve">
+    <value>Your bid were not enough to win the auction and your money is now back.\nItem: {0}\nPrice: {1}</value>
+  </data>
+  <data name="StrMailAuctionAuctionedCancelledTitle" xml:space="preserve">
+    <value>Cancelled: [{0}]</value>
+  </data>
+  <data name="StrMailAuctionAuctionedSellerContent" xml:space="preserve">
+    <value>Your item has been auctioned with success.\nItem: {0}\nBuyer: {1}\nPrice: {2}\nAuction Fee: {3}\nGains: {4}</value>
+  </data>
+  <data name="StrMailAuctionAuctionedSellerTitle" xml:space="preserve">
+    <value>Auctioned: [{0}]</value>
+  </data>
+  <data name="StrMailAuctionCancelBidContent" xml:space="preserve">
+    <value>Item: [{0}]\nPrice:{1}\nThe auction has been cancelled and you're receiving your money back.</value>
+  </data>
+  <data name="StrMailAuctionCancelBidTitle" xml:space="preserve">
+    <value>Cancelled: [{0}]</value>
+  </data>
+  <data name="StrMailAuctionCancelSenderContent" xml:space="preserve">
+    <value>Your item [{0}] auction has been cancelled and returned to you.</value>
+  </data>
+  <data name="StrMailAuctionCancelSenderTitle" xml:space="preserve">
+    <value>Cancelled: [{0}]</value>
+  </data>
+  <data name="StrMailAuctionNoBidsContent" xml:space="preserve">
+    <value>Your item [{0}] has not received any bid and returned to you.</value>
+  </data>
+  <data name="StrMailAuctionNoBidsTitle" xml:space="preserve">
+    <value>Expired: [{0}]</value>
+  </data>
+  <data name="StrMailAuctionSender" xml:space="preserve">
+    <value>Auction Center</value>
+  </data>
+  <data name="StrMailPurchaseAction" xml:space="preserve">
+    <value>A custom reward</value>
+  </data>
+  <data name="StrMailPurchaseContent" xml:space="preserve">
+    <value>Hello {0}!\nThank you for contributing with our server. Here's what your pack provided to you: {1}</value>
+  </data>
+  <data name="StrMailPurchaseSender" xml:space="preserve">
+    <value>Game Master</value>
+  </data>
+  <data name="StrMailPurchaseTitle" xml:space="preserve">
+    <value>Thank you for your contribution</value>
+  </data>
+  <data name="StrMailSuspiciousItemContent" xml:space="preserve">
+    <value>One of your equipments '{0}' has been flagged as suspicious and is being investigated by the system.</value>
+  </data>
+  <data name="StrMailSuspiciousItemTitle" xml:space="preserve">
+    <value>Suspicious item flagged</value>
+  </data>
+  <data name="StrMailSynCompeteCtfRewardContent" xml:space="preserve">
+    <value>Thank you for participating on the Capture the Flag for '{0}'.\nYou have done {1} points and your clan finished at rank {2}. You received the following rewards:\nSilvers: {3}\nConquer Points: {4}</value>
+  </data>
+  <data name="StrMailSynCompeteCtfRewardTitle" xml:space="preserve">
+    <value>Capture the Flag reward</value>
+  </data>
+  <data name="StrMailSynCompeteCtfSender" xml:space="preserve">
+    <value>Capture the Flag</value>
+  </data>
+  <data name="StrMakeFriend" xml:space="preserve">
+    <value>{0} and {1} are friends from now on.</value>
+  </data>
+  <data name="StrMakeFriendSent" xml:space="preserve">
+    <value>A request to be friends has been sent.</value>
+  </data>
+  <data name="StrMaleMateLogin" xml:space="preserve">
+    <value>Your husband is online.</value>
+  </data>
+  <data name="StrMarriageErrSameGender" xml:space="preserve">
+    <value>You cannot marry a character of the same gender.</value>
+  </data>
+  <data name="StrMarriageNotApply" xml:space="preserve">
+    <value>You haven't applied for marriage.</value>
+  </data>
+  <data name="StrMarriageTargetNotSingle" xml:space="preserve">
+    <value>The target is already married.</value>
+  </data>
+  <data name="StrMarriageYouNoSingle" xml:space="preserve">
+    <value>You're already married.</value>
+  </data>
+  <data name="StrMarry" xml:space="preserve">
+    <value>{0} and {1} are pronounced the husband and wife. They promise to love and care for each other for better or worse.</value>
+  </data>
+  <data name="StrMessageBoxCannotCaptcha" xml:space="preserve">
+    <value>The target user is pending a captcha reply. Please try again later!</value>
+  </data>
+  <data name="StrMeteSpecialInvalidGenderErr" xml:space="preserve">
+    <value>What gender are you?</value>
+  </data>
+  <data name="StrMeteSpecialLevelErr" xml:space="preserve">
+    <value>You are not over level 110.</value>
+  </data>
+  <data name="StrMeteSpecialMetempsychosisErr" xml:space="preserve">
+    <value>You are not in your second life yet. Please come back after second rebirth.</value>
+  </data>
+  <data name="StrMeteSpecialOblivionDewErr" xml:space="preserve">
+    <value>You do not have a Oblivion Dew. I cannot help you reincarnate.</value>
+  </data>
+  <data name="StrMeteSpecialWrongBodyErr" xml:space="preserve">
+    <value>You cannot change your gender reincarnating.</value>
+  </data>
+  <data name="StrMineItemFound" xml:space="preserve">
+    <value>You found {0}!</value>
+  </data>
+  <data name="StrMineWithPecker" xml:space="preserve">
+    <value>You must use a pecker to mine.</value>
+  </data>
+  <data name="StrNeiGongPlayerLevelErr" xml:space="preserve">
+    <value>You have not reached the required level.</value>
+  </data>
+  <data name="StrNeiGongReqLev" xml:space="preserve">
+    <value>You should have {0} to learn the book.</value>
+  </data>
+  <data name="StrNeiGongReqPreNg" xml:space="preserve">
+    <value>You should acquire the foregoing Inner Power, first.</value>
+  </data>
+  <data name="StrNeiGongReqValue" xml:space="preserve">
+    <value>You should have {0} points of Inner Power to learn the book.</value>
+  </data>
+  <data name="StrNextMaintenanceTime" xml:space="preserve">
+    <value>Next maintenance is today at {0}! Organize yourself to logout before the shutdown time to avoid losses.</value>
+  </data>
+  <data name="StrNoBonus" xml:space="preserve">
+    <value>Sorry, you have no prize available or it hasn't been claimed at the event page.</value>
+  </data>
+  <data name="StrNoGemEmbed" xml:space="preserve">
+    <value>This item is not a gem.</value>
+  </data>
+  <data name="StrNoMine" xml:space="preserve">
+    <value>You cannot mine here.</value>
+  </data>
+  <data name="StrNone" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="StrNoNeigongBook" xml:space="preserve">
+    <value>The Inner Power Book cannot be found in your inventory.</value>
+  </data>
+  <data name="StrNoTeam" xml:space="preserve">
+    <value>Inexistent team.</value>
+  </data>
+  <data name="StrNoTeamToInvite" xml:space="preserve">
+    <value>You are not in a team.</value>
+  </data>
+  <data name="StrNotEnoughAttributePoints" xml:space="preserve">
+    <value>You don't have enough attribute points.</value>
+  </data>
+  <data name="StrNotEnoughEmoney" xml:space="preserve">
+    <value>You don't have enough Conquer Points.</value>
+  </data>
+  <data name="StrNotEnoughEmoneyMono" xml:space="preserve">
+    <value>You don't have enough Conquer Points(B).</value>
+  </data>
+  <data name="StrNotEnoughFamilyMoneyToChallenge" xml:space="preserve">
+    <value>There is not enough in the Clan Fund to apply for the Clan War.</value>
+  </data>
+  <data name="StrNotEnoughLevel" xml:space="preserve">
+    <value>You haven't reached the required level.</value>
+  </data>
+  <data name="StrNotEnoughMoney" xml:space="preserve">
+    <value>You don't have enough Silvers.</value>
+  </data>
+  <data name="StrNotEnoughSpaceN" xml:space="preserve">
+    <value>You need to leave at least {0} empty spaces in your inventory.</value>
+  </data>
+  <data name="StrNotifyNewCountryLeague" xml:space="preserve">
+    <value>Your Union has come into power and reformed the Treasury, collecting %d Gold Bricks from other Unions.</value>
+  </data>
+  <data name="StrNotifyReduceBrick" xml:space="preserve">
+    <value>The new reigning Union has reformed the Treasury and collected %d Gold Bricks from your Union.</value>
+  </data>
+  <data name="StrNotToTrade" xml:space="preserve">
+    <value>This item cannot be traded.</value>
+  </data>
+  <data name="StrObservingEquipment" xml:space="preserve">
+    <value>{0} is observing your equipments carefully.</value>
+  </data>
+  <data name="StrOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="StrOsInvadePkMode" xml:space="preserve">
+    <value>Invade mode: Only attack players of the target (current) server. No PK punishment.</value>
+  </data>
+  <data name="StrOsPkMode" xml:space="preserve">
+    <value>CS (Cross-Server) mode: Attack cross-server players. No PK punishment.</value>
+  </data>
+  <data name="StrOsSafePkMode" xml:space="preserve">
+    <value>You`re not allowed to attack others while in CS Peace mode.</value>
+  </data>
+  <data name="StrPackageFull" xml:space="preserve">
+    <value>This storage is full.</value>
+  </data>
+  <data name="StrPeerageDonateErrBelowLevel" xml:space="preserve">
+    <value>You need to be level 70 or above to donate.</value>
+  </data>
+  <data name="StrPeerageDonateErrBelowUnderline" xml:space="preserve">
+    <value>The lowest amount you can donate is 3,000,000 silvers.</value>
+  </data>
+  <data name="StrPeerageDonateErrNoEnoughMoney" xml:space="preserve">
+    <value>You don't have enough silvers.</value>
+  </data>
+  <data name="StrPeerageDonateOverflow" xml:space="preserve">
+    <value>You can`t donate more than 1 billion silver each time.</value>
+  </data>
+  <data name="StrPeerageOnlySilvers" xml:space="preserve">
+    <value>You can only donate silvers to the empire!</value>
+  </data>
+  <data name="StrPeeragePromptBaron" xml:space="preserve">
+    <value>Hear ye, hear ye! Greetings to our new Baron, {0}!</value>
+  </data>
+  <data name="StrPeeragePromptBaroness" xml:space="preserve">
+    <value>Hear ye, hear ye! Greetings to our new Baroness, {0}!</value>
+  </data>
+  <data name="StrPeeragePromptCountess" xml:space="preserve">
+    <value>Hear ye, hear ye! Welcome to our new Countess, {0}!</value>
+  </data>
+  <data name="StrPeeragePromptDuchess" xml:space="preserve">
+    <value>Hear ye, hear ye! Rejoice for the new Duchess, {0}!</value>
+  </data>
+  <data name="StrPeeragePromptDuke" xml:space="preserve">
+    <value>Hear ye, hear ye! Rejoice for the new Duke, {0}!</value>
+  </data>
+  <data name="StrPeeragePromptEarl" xml:space="preserve">
+    <value>Hear ye, hear ye! Welcome to our new Earl, {0}!</value>
+  </data>
+  <data name="StrPeeragePromptKing" xml:space="preserve">
+    <value>Hear ye, hear ye! All hails to our majesty {0}, King of Conquer!</value>
+  </data>
+  <data name="StrPeeragePromptKnight" xml:space="preserve">
+    <value>Hear ye, hear ye! Knight {0} has just been appointed!</value>
+  </data>
+  <data name="StrPeeragePromptLady" xml:space="preserve">
+    <value>Hear ye, hear ye! Lady {0} has just been appointed!</value>
+  </data>
+  <data name="StrPeeragePromptPrince" xml:space="preserve">
+    <value>Hear ye, hear ye! A new Prince has arrived! Hail, {0}! Prince!</value>
+  </data>
+  <data name="StrPeeragePromptPrincess" xml:space="preserve">
+    <value>Hear ye, hear ye! A new Princess has arrived! Hail, {0}! Princess!</value>
+  </data>
+  <data name="StrPeeragePromptQueen" xml:space="preserve">
+    <value>Hear ye, hear ye! All hails to our majesty {0}, Queen of Conquer!</value>
+  </data>
+  <data name="StrPickupItem" xml:space="preserve">
+    <value>You picked up {0}.</value>
+  </data>
+  <data name="StrPickupSilvers" xml:space="preserve">
+    <value>You picked up {0:D0} silvers.</value>
+  </data>
+  <data name="StrPigeonAdditionUnexist" xml:space="preserve">
+    <value>Your message has not been found.</value>
+  </data>
+  <data name="StrPigeonSendErrEmptyString" xml:space="preserve">
+    <value>Fail to submit your message since you have entered nothing.</value>
+  </data>
+  <data name="StrPigeonSendErrNoEmoney" xml:space="preserve">
+    <value>Fail to broadcast your messages since you do not have enough CPs.</value>
+  </data>
+  <data name="StrPigeonSendErrStringTooLong" xml:space="preserve">
+    <value>Fail to broadcast your message. Please shorten your message.</value>
+  </data>
+  <data name="StrPigeonSendOver5Pieces" xml:space="preserve">
+    <value>You have five messages waiting for broadcast. Please submit again later.</value>
+  </data>
+  <data name="StrPigeonSendProducePrompt" xml:space="preserve">
+    <value>Congratulations. You have submitted a message for broadcast.</value>
+  </data>
+  <data name="StrPigeonUrgentAlreadySent" xml:space="preserve">
+    <value>Sorry, you can not mark your message urgent since it has been already broadcast.</value>
+  </data>
+  <data name="StrPigeonUrgentErrNoEmoney" xml:space="preserve">
+    <value>Sorry, you do not have enough CPs to submit an urgent message for broadcast.</value>
+  </data>
+  <data name="StrPkBonus" xml:space="preserve">
+    <value>Thank you for helping detain equipment. Please find {0} ({1}, {2}) in the market to get rewards.</value>
+  </data>
+  <data name="StrPlayerNeiGongNoOpen" xml:space="preserve">
+    <value>The target has not unlocked the Inner Power system.</value>
+  </data>
+  <data name="StrPlunderPkMode" xml:space="preserve">
+    <value>Loot mode allows you to attack players from the Union looting your kingdom or players from other Unions in your server.</value>
+  </data>
+  <data name="StrPrepareToChallengeFamily" xml:space="preserve">
+    <value>The Clan Leader has sent a request to challenge {0}. Prepare yourself!</value>
+  </data>
+  <data name="StrPrepareToChallengeFamilyLogin" xml:space="preserve">
+    <value>The Clan Leader has signed up for the Clan War for the domination of {0}. Prepare yourself!</value>
+  </data>
+  <data name="StrPrepareToDefendFamily" xml:space="preserve">
+    <value>{0} is challenged by other Clan. Prepare yourself!</value>
+  </data>
+  <data name="StrPrepareToDefendFamilyLogin" xml:space="preserve">
+    <value>Other Clan wants to get the domination of {0} from your clan. Please get ready!</value>
+  </data>
+  <data name="StrQkdExceedMax" xml:space="preserve">
+    <value>Your new Sash will exceed the maximum number of slots.</value>
+  </data>
+  <data name="StrQkdMax" xml:space="preserve">
+    <value>Your new Sash already has a maximum number of slots.</value>
+  </data>
+  <data name="StrQkdNeedEmpty" xml:space="preserve">
+    <value>Please empty the Sash before reshaping it.</value>
+  </data>
+  <data name="StrRealmTransferFailed" xml:space="preserve">
+    <value>Your transfer to another server has failed. Try again.</value>
+  </data>
+  <data name="StrRedeemEquip" xml:space="preserve">
+    <value>{0} has redeemed the detained items. {1} CPs has been awarded to {2}.</value>
+  </data>
+  <data name="StrRevengePkMode" xml:space="preserve">
+    <value>Revenge mode: Slay your listed enemies, monsters, and cross-server players.</value>
+  </data>
+  <data name="StrSafePkMode" xml:space="preserve">
+    <value>Peace mode. You can only attack monsters.</value>
+  </data>
+  <data name="StrServerMaintenanceMinute" xml:space="preserve">
+    <value>{0} minute</value>
+  </data>
+  <data name="StrServerMaintenanceMinutes" xml:space="preserve">
+    <value>{0} minutes</value>
+  </data>
+  <data name="StrServerMaintenanceMinuteSeconds" xml:space="preserve">
+    <value>{0} minute and {1} seconds</value>
+  </data>
+  <data name="StrServerMaintenanceMinutesSeconds" xml:space="preserve">
+    <value>{0} minutes {1} seconds</value>
+  </data>
+  <data name="StrServerMaintenanceScheduleStart" xml:space="preserve">
+    <value>Server maintenance in {0} minutes! Monsters will not respawn anymore and login is closed. Please log out to avoid losses.</value>
+  </data>
+  <data name="StrServerMaintenanceSeconds" xml:space="preserve">
+    <value>{0} seconds</value>
+  </data>
+  <data name="StrServerMaintenanceShutdown" xml:space="preserve">
+    <value>Server is closing for maintenance, you're being disconnected!</value>
+  </data>
+  <data name="StrServerMaintenanceWarning" xml:space="preserve">
+    <value>Server maintenance in {0}! Please log out to avoid losses.</value>
+  </data>
+  <data name="StrShieldActiveP" xml:space="preserve">
+    <value>Shield for {0} seconds, your defense will be increased by {1} percent.</value>
+  </data>
+  <data name="StrShieldActiveT" xml:space="preserve">
+    <value>Shield for {0} seconds, your defense will be increased by {1} times.</value>
+  </data>
+  <data name="StrSilvers" xml:space="preserve">
+    <value>Silvers</value>
+  </data>
+  <data name="StrSilversExceedAmount" xml:space="preserve">
+    <value>You'll exceed the maximum amount of silvers to store. Can't exceed {0:N0}.</value>
+  </data>
+  <data name="StrSlotEmoney1350" xml:space="preserve">
+    <value>Congratulations! {0} played lottery at {1}, and won {2} CPs!</value>
+  </data>
+  <data name="StrSlotEmoney270" xml:space="preserve">
+    <value>{0} played lottery at {1}, and won {2} CPs!</value>
+  </data>
+  <data name="StrSlotEmoney2700" xml:space="preserve">
+    <value>With enviable luck, {0} played lottery at {1}, and won {2} CPs!</value>
+  </data>
+  <data name="StrSlotEmoney666665" xml:space="preserve">
+    <value>What a lucky star! {0} played lottery at {1}, and won {2} CPs!</value>
+  </data>
+  <data name="StrSlotMoney1250" xml:space="preserve">
+    <value>{0} played lottery at {1} and won {2} Silver!</value>
+  </data>
+  <data name="StrSlotMoney12500" xml:space="preserve">
+    <value>With enviable luck, {0} played lottery at {1}, and won {2} Silver!</value>
+  </data>
+  <data name="StrSlotMoney6250" xml:space="preserve">
+    <value>Congratulations! {0} played lottery at {1}, and won {2} Silver!</value>
+  </data>
+  <data name="StrSlotMoney666665" xml:space="preserve">
+    <value>What a lucky star! {0} played lottery at {1}, and won {2} Silver!</value>
+  </data>
+  <data name="StrStigmaActiveP" xml:space="preserve">
+    <value>Stigma for {0} seconds, your attack will be increased by {1} percent.</value>
+  </data>
+  <data name="StrStigmaActiveT" xml:space="preserve">
+    <value>Stigma for {0} seconds, your attack will be increased by {1} times.</value>
+  </data>
+  <data name="StrSuperFlagNotAllowedInMap" xml:space="preserve">
+    <value>Memory agate cannot be used in this map.</value>
+  </data>
+  <data name="StrSupermanBroadcast" xml:space="preserve">
+    <value>{0} has killed {1} monsters and is now rank {2} on KO Board.</value>
+  </data>
+  <data name="StrSynAbdicate" xml:space="preserve">
+    <value>Guild Leader {0} has abdicated the leadership to {1}.</value>
+  </data>
+  <data name="StrSynAddedEnemy" xml:space="preserve">
+    <value>The Guild Leader {0} of the Guild {1} has added us to the enemies list.</value>
+  </data>
+  <data name="StrSynAddEnemy" xml:space="preserve">
+    <value>Guild Leader {0} has added Guild {1} to the enemies list.</value>
+  </data>
+  <data name="StrSynAllyAdd" xml:space="preserve">
+    <value>Guild Leader {0} has added Guild {1} to the allies list.</value>
+  </data>
+  <data name="StrSynAllyRemove" xml:space="preserve">
+    <value>Guild Leader {0} has removed the Guild {1} from the allies list.</value>
+  </data>
+  <data name="StrSynAllyRemoved" xml:space="preserve">
+    <value>The Guild Leader {0} of {1} has removed our guild from the allies list.</value>
+  </data>
+  <data name="StrSynAlreadyJoined" xml:space="preserve">
+    <value>You are already in a guild.</value>
+  </data>
+  <data name="StrSynCompeteCtf2nd" xml:space="preserve">
+    <value>{0} is 2nd place of this round of Capture the Flag! The guild received {1:N0} Gold and {2:N0} CPs as a reward.</value>
+  </data>
+  <data name="StrSynCompeteCtf2ndSyn" xml:space="preserve">
+    <value>Congratulations, your guild is the 2nd place winner of Capture the Flag! Your guild received {0:N0} Gold and {1:N0} CPs as a reward.</value>
+  </data>
+  <data name="StrSynCompeteCtf3rd" xml:space="preserve">
+    <value>{0} is 3rd place of this round of Capture the Flag! The guild received {1:N0} Gold and {2:N0} CPs as a reward.</value>
+  </data>
+  <data name="StrSynCompeteCtf3rdSyn" xml:space="preserve">
+    <value>Your guild received {0:N0} Gold and {1:N0} CPs.</value>
+  </data>
+  <data name="StrSynCompeteCtf4th" xml:space="preserve">
+    <value>{0} is {1}th place of this round of Capture the Flag! The guild received {2:N0} Gold and {3:N0} CPs as a reward.</value>
+  </data>
+  <data name="StrSynCompeteCtf4thSyn" xml:space="preserve">
+    <value>Your guild received {0:N0} Gold and {1:N0} CPs.</value>
+  </data>
+  <data name="StrSynCompeteCtfChampion" xml:space="preserve">
+    <value>{0} is Champion of this round of Capture the Flag! The guild receives {1:N0} Gold and {2:N0} CPs as a reward!</value>
+  </data>
+  <data name="StrSynCompeteCtfChampionSyn" xml:space="preserve">
+    <value>Congratulations, your guild is the Champions of Capture the Flag! Your guild received {0:N0} Gold and {1:N0} CPs as a reward.</value>
+  </data>
+  <data name="StrSynCreate" xml:space="preserve">
+    <value>Congratulations! {0} has set up {1} successfully.</value>
+  </data>
+  <data name="StrSynDelByLeague" xml:space="preserve">
+    <value>Your guild was expelled from the Union by {0}.</value>
+  </data>
+  <data name="StrSynDestroy" xml:space="preserve">
+    <value>Guild {0} has been terminated.</value>
+  </data>
+  <data name="StrSyndicateAllianceAccept" xml:space="preserve">
+    <value>Guild {0} has accepted your alliance request.</value>
+  </data>
+  <data name="StrSyndicateAllianceDeny" xml:space="preserve">
+    <value>Guild {0} has denied your alliance request.</value>
+  </data>
+  <data name="StrSyndicateAllianceRequest" xml:space="preserve">
+    <value>{0} Guild Leader from {1} is asking to be your ally. Do you accept?</value>
+  </data>
+  <data name="StrSyndicateAntagonize0" xml:space="preserve">
+    <value>Our {0} {1} has added {2} to the enemies list.</value>
+  </data>
+  <data name="StrSyndicateAntagonize1" xml:space="preserve">
+    <value>{0} {1} from {2} has added us to the enemies list.</value>
+  </data>
+  <data name="StrSyndicateBeKill" xml:space="preserve">
+    <value>Enemy {0} {1} from  {2} has killed {3} {4} in {5}!</value>
+  </data>
+  <data name="StrSyndicateContestElimination" xml:space="preserve">
+    <value>{0} from {1} has died {2} times and has been eliminated from the contest.</value>
+  </data>
+  <data name="StrSyndicateContestEnterMap" xml:space="preserve">
+    <value>{0} from {1} has entered the map.</value>
+  </data>
+  <data name="StrSyndicateContestRankNo" xml:space="preserve">
+    <value>N{0}: {1} - {2}</value>
+  </data>
+  <data name="StrSyndicateContestRankTitle" xml:space="preserve">
+    <value>Guild Contest Rank</value>
+  </data>
+  <data name="StrSyndicateContestRewardNotify" xml:space="preserve">
+    <value>Your guild got ranked at {3} and you achieved rank {0} and awarded with {1} silvers and {2} CPs from the Guild Contest.</value>
+  </data>
+  <data name="StrSyndicateKill" xml:space="preserve">
+    <value>{0} {1} has killed {2} {3} from {4} in {5}!</value>
+  </data>
+  <data name="StrSyndicateNeutral0" xml:space="preserve">
+    <value>Guild {0} has removed us from the allies list.</value>
+  </data>
+  <data name="StrSyndicateNeutral1" xml:space="preserve">
+    <value>Our Guild Leader {0} has removed {1} from the allies list.</value>
+  </data>
+  <data name="StrSyndicatePeace0" xml:space="preserve">
+    <value>Guild {0} has removed us from the enemies list.</value>
+  </data>
+  <data name="StrSyndicatePeace1" xml:space="preserve">
+    <value>Our Guild Leader {0} has removed {1} from the enemies list.</value>
+  </data>
+  <data name="StrSyndicatePkMode" xml:space="preserve">
+    <value>Guild mode: Slay monsters, the players in your enemy guilds, and cross-server players.</value>
+  </data>
+  <data name="StrSyndicatePleaseDisband" xml:space="preserve">
+    <value>You are leader of a guild. Please disband it or pass the leadership.</value>
+  </data>
+  <data name="StrSyndicatePleaseLeave" xml:space="preserve">
+    <value>You're still in a guild. Please leave the guild and try again.</value>
+  </data>
+  <data name="StrSyndicateSameKill" xml:space="preserve">
+    <value>{0} {1} has killed {2} {3} in {4}!</value>
+  </data>
+  <data name="StrSynDonateEmoney" xml:space="preserve">
+    <value>{0} {1} has donated {2:N0} Conquer Points to the guild.</value>
+  </data>
+  <data name="StrSynDonateMoney" xml:space="preserve">
+    <value>{0} {1} has donated {2:N0} silvers to the guild.</value>
+  </data>
+  <data name="StrSynExitLeague" xml:space="preserve">
+    <value>The Guild Leader has decided to quit Union {0}.</value>
+  </data>
+  <data name="StrSynExitNotEnoughMoney" xml:space="preserve">
+    <value>You need to donate {0:N0} to the guild before leaving.</value>
+  </data>
+  <data name="StrSynInLeague" xml:space="preserve">
+    <value>Your guild has pledged loyalty to the Union and cannot be disbanded.</value>
+  </data>
+  <data name="StrSynInviteGuild" xml:space="preserve">
+    <value>{0} {1} has invited {2} to the guild.</value>
+  </data>
+  <data name="StrSynJoinGuild" xml:space="preserve">
+    <value>{0} {1} has accepted {2} in the guild.</value>
+  </data>
+  <data name="StrSynJoinLeague" xml:space="preserve">
+    <value>Guild {0} has pledged loyalty to Union {1} for an ambitious future.</value>
+  </data>
+  <data name="StrSynMemberExit" xml:space="preserve">
+    <value>{0} has left the guild.</value>
+  </data>
+  <data name="StrSynMemberKickout" xml:space="preserve">
+    <value>{0} {1} has removed {2} from the guild.</value>
+  </data>
+  <data name="StrSynNameInUse" xml:space="preserve">
+    <value>The guild name is already in use.</value>
+  </data>
+  <data name="StrSynNoDisband" xml:space="preserve">
+    <value>You cannot disband this guild.</value>
+  </data>
+  <data name="StrSynNoMoney" xml:space="preserve">
+    <value>The guild needs at least {0:N0} funds to execute actions.</value>
+  </data>
+  <data name="StrSynNotLeader" xml:space="preserve">
+    <value>You are not the Guild Leader.</value>
+  </data>
+  <data name="StrSynPromoted" xml:space="preserve">
+    <value>Congratulations! {0} {1} has promoted {2} to {3}!</value>
+  </data>
+  <data name="StrSynRecruitmentJoin" xml:space="preserve">
+    <value>{0} has joined the guild.</value>
+  </data>
+  <data name="StrSynRecruitNotAllowProfession" xml:space="preserve">
+    <value>[Guild] This guild is not allowing members of your profession.</value>
+  </data>
+  <data name="StrSynRecruitNotAllowSex" xml:space="preserve">
+    <value>[Guild] This guild is not allowing members of your gender.</value>
+  </data>
+  <data name="StrSynRemovedEnemy" xml:space="preserve">
+    <value>The Guild Leader {0} of {1} has removed our guild from the enemy list.</value>
+  </data>
+  <data name="StrSynRemoveEnemy" xml:space="preserve">
+    <value>Guild Leader {0} has removed the Guild {1} from the enemy list.</value>
+  </data>
+  <data name="StrSynSetMeedBoth" xml:space="preserve">
+    <value>{0} Guild Leader of {1} has set a reward of {2} silvers and {3} Conquer Points for {4}.</value>
+  </data>
+  <data name="StrSynSetMeedEmoney" xml:space="preserve">
+    <value>{0} Guild Leader of {1} has set a reward of {2} Conquer Points for {3}.</value>
+  </data>
+  <data name="StrSynSetMeedMoney" xml:space="preserve">
+    <value>{0} Guild Leader of {1} has set a reward of {2} silvers for {3}.</value>
+  </data>
+  <data name="StrSynWarIpRewarded" xml:space="preserve">
+    <value>Your IP Address has already claimed an reward! You cannot claim it twice.</value>
+  </data>
+  <data name="StrSynWarRewardNotify" xml:space="preserve">
+    <value>You received {0:N0} silvers and {1:N0} CPs for winning the Guild War.</value>
+  </data>
+  <data name="StrSynYouBeenKicked" xml:space="preserve">
+    <value>You have been kicked out of the guild by {0}!</value>
+  </data>
+  <data name="StrSynYouNoLeader" xml:space="preserve">
+    <value>You are not the Guild Leader.</value>
+  </data>
+  <data name="StrSystem" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="StrTargetFriendListFull" xml:space="preserve">
+    <value>Your target friend list is full.</value>
+  </data>
+  <data name="StrTargetHasNoTeam" xml:space="preserve">
+    <value>The target doen't have a team.</value>
+  </data>
+  <data name="StrTargetIsNotAlive" xml:space="preserve">
+    <value>The target is not alive.</value>
+  </data>
+  <data name="StrTargetNotInRange" xml:space="preserve">
+    <value>The target is not in range.</value>
+  </data>
+  <data name="StrTargetNotOnline" xml:space="preserve">
+    <value>The target is not online.</value>
+  </data>
+  <data name="StrTeamAlreadyNoJoin" xml:space="preserve">
+    <value>You are already in a team.</value>
+  </data>
+  <data name="StrTeamApplySent" xml:space="preserve">
+    <value>Your team application has been sent.</value>
+  </data>
+  <data name="StrTeamArenaMatchEnd" xml:space="preserve">
+    <value>{0}`team has defeated {1}`team in the qualifier.</value>
+  </data>
+  <data name="StrTeamAuraCreate" xml:space="preserve">
+    <value>{0} has used {1} at {2}.</value>
+  </data>
+  <data name="StrTeamClosed" xml:space="preserve">
+    <value>The target team is not accepting new members.</value>
+  </data>
+  <data name="StrTeamDismissNoLeader" xml:space="preserve">
+    <value>Only the team leader can dismiss the team.</value>
+  </data>
+  <data name="StrTeamExperience" xml:space="preserve">
+    <value>{0} team experience awarded.</value>
+  </data>
+  <data name="StrTeamFull" xml:space="preserve">
+    <value>The team is full.</value>
+  </data>
+  <data name="StrTeamGems" xml:space="preserve">
+    <value>Precious: {0}</value>
+  </data>
+  <data name="StrTeamInvitedNotFound" xml:space="preserve">
+    <value>The user you're trying to invite does not exist.</value>
+  </data>
+  <data name="StrTeamItems" xml:space="preserve">
+    <value>Items: {0}</value>
+  </data>
+  <data name="StrTeamLeaderDead" xml:space="preserve">
+    <value>The team leader is not alive.</value>
+  </data>
+  <data name="StrTeamLeaderNotInRange" xml:space="preserve">
+    <value>The leader is not in range.</value>
+  </data>
+  <data name="StrTeamNoCapitain" xml:space="preserve">
+    <value>Youa not leader of the team.</value>
+  </data>
+  <data name="StrTeamNoLeader" xml:space="preserve">
+    <value>The target isn't leader of a team.</value>
+  </data>
+  <data name="StrTeamNotInvited" xml:space="preserve">
+    <value>You haven't been invited to this team.</value>
+  </data>
+  <data name="StrTeamPkMode" xml:space="preserve">
+    <value>Team mode: Slay monsters, and all other players (including cross-server players) not in your current team or guild.</value>
+  </data>
+  <data name="StrTeamSilver" xml:space="preserve">
+    <value>Silvers: {0}</value>
+  </data>
+  <data name="StrTeamTargetAlreadyTeam" xml:space="preserve">
+    <value>The target is already in a team.</value>
+  </data>
+  <data name="StrTeamTargetHasNotApplied" xml:space="preserve">
+    <value>The target has not applied for this team.</value>
+  </data>
+  <data name="StrTeamTargetNotInRange" xml:space="preserve">
+    <value>The target is not in range.</value>
+  </data>
+  <data name="StrToMakeFriend" xml:space="preserve">
+    <value>{0} has sent you a friend request.</value>
+  </data>
+  <data name="StrTotemPoleLimit" xml:space="preserve">
+    <value>You've reached the limit of {0} items on this arsenal.</value>
+  </data>
+  <data name="StrTradeBuddyAlreadyAdded" xml:space="preserve">
+    <value>You're already partners.</value>
+  </data>
+  <data name="StrTradeBuddyAnnouncePartnership" xml:space="preserve">
+    <value>{0} and {1} accepted a trade partnership that will be approved within 3 days.</value>
+  </data>
+  <data name="StrTradeBuddyBrokePartnership0" xml:space="preserve">
+    <value>{0} broke the trade partnership with you.</value>
+  </data>
+  <data name="StrTradeBuddyBrokePartnership1" xml:space="preserve">
+    <value>You broke the trade partnership with {0}.</value>
+  </data>
+  <data name="StrTradeBuddyNotFound" xml:space="preserve">
+    <value>Your partner has not been found.</value>
+  </data>
+  <data name="StrTradeBuddySomethingWrong" xml:space="preserve">
+    <value>Something went wrong when processing your request.</value>
+  </data>
+  <data name="StrTradeMuchEmoney" xml:space="preserve">
+    <value>[Trade] You cannot trade more than {0:N0} Conquer Points.</value>
+  </data>
+  <data name="StrTradeMuchMoney" xml:space="preserve">
+    <value>[Trade] You cannot trade more than {0:N0} silvers.</value>
+  </data>
+  <data name="StrTradeRequestSent" xml:space="preserve">
+    <value>[Trade] Your request has been sent.</value>
+  </data>
+  <data name="StrTradeSashFull" xml:space="preserve">
+    <value>[Trade] You cannot trade more items.</value>
+  </data>
+  <data name="StrTradeSuccess" xml:space="preserve">
+    <value>[Trade] Trade success.</value>
+  </data>
+  <data name="StrTradeTargetAlreadyTrade" xml:space="preserve">
+    <value>[Trade] The target is already trading.</value>
+  </data>
+  <data name="StrTradeTargetBagIsFull" xml:space="preserve">
+    <value>[Trade] The target bag is full.</value>
+  </data>
+  <data name="StrTradeYouAlreadyTrade" xml:space="preserve">
+    <value>[Trade] You are already trading.</value>
+  </data>
+  <data name="StrTradeYourBagIsFull" xml:space="preserve">
+    <value>[Trade] Your bag is full.</value>
+  </data>
+  <data name="StrUnableToUseItem" xml:space="preserve">
+    <value>Unable to use item.</value>
+  </data>
+  <data name="StrUpgradeAwardSocket" xml:space="preserve">
+    <value>Your equipment received a new socket.</value>
+  </data>
+  <data name="StrUseItem" xml:space="preserve">
+    <value>You have used an item.</value>
+  </data>
+  <data name="StrVipDropItem" xml:space="preserve">
+    <value>You killed a monster and he dropped a {0}.</value>
+  </data>
+  <data name="StrVipNotify" xml:space="preserve">
+    <value>You've bound a VIP level {0} which will expire at {1} to your account.</value>
+  </data>
+  <data name="StrVipQkdSashUpgrade" xml:space="preserve">
+    <value>Thank you for contributing to the server! Your chest package has been upgraded to the max.</value>
+  </data>
+  <data name="StrWarEnd" xml:space="preserve">
+    <value>War has ended!</value>
+  </data>
+  <data name="StrWarRankingNo" xml:space="preserve">
+    <value>No. {0}: {1} ({2:N0})</value>
+  </data>
+  <data name="StrWarRankingStart" xml:space="preserve">
+    <value>War Ranking:</value>
+  </data>
+  <data name="StrWarStart" xml:space="preserve">
+    <value>War has begun!</value>
+  </data>
+  <data name="StrWarWon" xml:space="preserve">
+    <value>{0} dominated the Guild Area!</value>
+  </data>
+  <data name="StrWarYourScore" xml:space="preserve">
+    <value>Your Score: {0:N0} Lives: {1}</value>
+  </data>
+  <data name="StrWeaponProfByActionLowLevel" xml:space="preserve">
+    <value>Your weapon proficiency couldn't be upgraded due to your low level.</value>
+  </data>
+  <data name="StrWeaponSkillUp" xml:space="preserve">
+    <value>Your weapon proeficiency level has been improved.</value>
+  </data>
+  <data name="StrYouHaveBeenBanned" xml:space="preserve">
+    <value>You have been banned!</value>
+  </data>
+  <data name="StrYourBagIsFull" xml:space="preserve">
+    <value>Your bag is full.</value>
+  </data>
+  <data name="StrYourFriendAlready" xml:space="preserve">
+    <value>The target already is your friend.</value>
+  </data>
+</root>

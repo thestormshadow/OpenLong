@@ -1,0 +1,98 @@
+{
+  "CooperatorMode": false,
+  "Game": {
+    "Id": 1,
+    "Guid": "94390aa0-c75d-11ed-9586-0050560401e2",
+    "Name": "WarLord",
+    "IPAddress": "25.47.231.41",
+    "Port": 5816,
+    "MaxOnlinePlayers": 1500,
+    "Username": "yD3Ni6tMW1NNU1QH",
+    "Password": "jETqqIKi9LuFvOgu",
+    "ReleaseDate": null,
+    "Processors": 4,
+    "Listener": {
+      "RecvProcessors": 1,
+      "SendProcessors": 1
+    }
+  },
+  "Database": {
+    "Hostname": "localhost",
+    "Username": "root",
+    "Password": "1234",
+    "Schema": "cq6135v2",
+    "Port": 3306
+  },
+  "Login": {
+    "IPAddress": "127.0.0.1",
+    "Port": 9865,
+    "Encryption": {
+      "Key": "M6gkSkSNXMZeyIwNc7YBUj42wuyh686pYmAK5Vg9L30=",
+      "EncryptIV": "dGZIN8XB4o4QgNJ5YXc1Sw==",
+      "DecryptIV": "K7wCbVKECO1noApl1laftA=="
+    }
+  },
+  "CrossCipher": {
+    "Key": "M6gkSkSNXMZeyIwNc7YBUj42wuyh686pYmAK5Vg9L30=",
+    "EncryptIV": "dGZIN8XB4o4QgNJ5YXc1Sw==",
+    "DecryptIV": "K7wCbVKECO1noApl1laftA=="
+  },
+  "Cross": {
+    "IPAddress": "0.0.0.0",
+    "ListenPort": 9856,
+    "Encryption": {
+      "Key": "M6gkSkSNXMZeyIwNc7YBUj42wuyh686pYmAK5Vg9L30=",
+      "EncryptIV": "K7wCbVKECO1noApl1laftA==",
+      "DecryptIV": "dGZIN8XB4o4QgNJ5YXc1Sw=="
+    }
+  },
+  "Piglet": {
+    "IPAddress": "25.47.231.41",
+    "Port": 4351,
+    "Username": "yD3Ni6tMW1NNU1QH",
+    "Password": "jETqqIKi9LuFvOgu"
+  },
+  "Ai": {
+    "IPAddress": "25.47.231.41",
+    "Port": 8650,
+    "Username": "yD3Ni6tMW1NNU1QH",
+    "Password": "jETqqIKi9LuFvOgu"
+  },
+  "Realm": {
+    "IPAddress": "127.0.0.1",
+    "Port": 9855,
+    "Username": "realmtestdbg",
+    "Password": "realmtestdbg",
+    "Servers": [
+      {
+        "ServerID": 1,
+        "ServerName": "WarLord",
+        "IPAddress": "127.0.0.1",
+        "Port": 9856,
+        "Username": "test",
+        "Password": "test"
+      }
+    ]
+  },
+  "Modules": [
+    "AstProf",
+    "Pigeon",
+    "Guide",
+    "Peerage",
+    "Flower",
+    "Rank",
+    "Competion",
+    "Family",
+    "TaskDetail",
+    "Totem",
+    "Syndicate",
+    "Trade",
+    "Booth",
+    "Relation",
+    "Team",
+    "Fate",
+    "JiangHu",
+    "NeiGong",
+    "Qualifying"
+  ]
+}

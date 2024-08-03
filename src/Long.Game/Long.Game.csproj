@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Version>0.1.2</Version>
+		<OutputPath>../Bin</OutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Config.Game1.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<ProjectReference Include="..\Long.Kernel\Long.Kernel.csproj" />
+		<ProjectReference Include="..\Long.Shared\Long.Shared.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <None Update="Config.Game.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+</Project>

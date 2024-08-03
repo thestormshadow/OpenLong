@@ -1,0 +1,92 @@
+﻿{
+  "CooperatorMode": false,
+  "Game": {
+    "Id": 100,
+    "Guid": "b4b3395a-12d5-11ef-9544-0050560401e2",
+    "Name": "Realm1",
+    "IPAddress": "0.0.0.0",
+    "Port": 9855,
+    "MaxOnlinePlayers": 5000,
+    "Username": "yD3Ni6tMW1NNU1QH",
+    "Password": "jETqqIKi9LuFvOgu",
+    "ReleaseDate": null,
+    "Processors": 4,
+    "Listener": {
+      "RecvProcessors": 1,
+      "SendProcessors": 1
+    }
+  },
+  "Database": {
+    "Hostname": "localhost",
+    "Username": "root",
+    "Password": "1234",
+    "Schema": "cq_realm",
+    "Port": 3306
+  },
+  "Login": {
+    "IPAddress": "127.0.0.1",
+    "Port": 9865,
+    "Encryption": {
+      "Key": "M6gkSkSNXMZeyIwNc7YBUj42wuyh686pYmAK5Vg9L30=",
+      "EncryptIV": "dGZIN8XB4o4QgNJ5YXc1Sw==",
+      "DecryptIV": "K7wCbVKECO1noApl1laftA=="
+    }
+  },
+  "Cross": {
+    "Encryption": {
+      "Key": "M6gkSkSNXMZeyIwNc7YBUj42wuyh686pYmAK5Vg9L30=",
+      "EncryptIV": "K7wCbVKECO1noApl1laftA==",
+      "DecryptIV": "dGZIN8XB4o4QgNJ5YXc1Sw=="
+    }
+  },
+  "Realm": {
+    "Username": "realmtestdbg",
+    "Password": "realmtestdbg",
+    "Servers": [
+      {
+        "ServerID": 1,
+        "ServerName": "Comet",
+        "IPAddress": "127.0.0.1",
+        "Port": 9856,
+        "Username": "test",
+        "Password": "test"
+      },
+      {
+        "ServerID": 2,
+        "ServerName": "test1",
+        "IPAddress": "127.0.0.1",
+        "Port": 9857,
+        "Username": "test",
+        "Password": "test"
+      },
+      {
+        "ServerID": 3,
+        "ServerName": "test2",
+        "IPAddress": "127.0.0.1",
+        "Port": 9858,
+        "Username": "test",
+        "Password": "test"
+      }
+    ]
+  },
+  "Modules": [
+    "Pigeon",
+    "Guide",
+    "Peerage",
+    "Flower",
+    "Rank",
+    "Competion",
+    "Family",
+    "TaskDetail",
+    "Totem",
+    "Syndicate",
+    "Trade",
+    "Booth",
+    "Relation",
+    "Team",
+    "AstProf",
+    "Fate",
+    "JiangHu",
+    "NeiGong"
+  ]
+}
