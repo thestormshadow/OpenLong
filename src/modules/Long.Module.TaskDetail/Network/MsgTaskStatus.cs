@@ -86,15 +86,10 @@ namespace Long.Module.TaskDetail.Network
                     await user.TaskDetail.CreateNewAsync((uint)taskItemStruct.Identity);
                 }
 			}
-			else if (Mode == TaskStatusMode.Remove)
-			{
-				foreach (var task in Tasks)
-				{
-					await TaskDetailRepository.RemoveAsync(client.Identity, (uint)task.Identity);
-				}
-				await client.SendAsync(this);
-			}
-		}
+            else if (Mode == TaskStatusMode.Remove)
+            {
+            }
+        }
 
         public class TaskItemStruct
         {

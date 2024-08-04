@@ -9,16 +9,5 @@ namespace Long.Kernel.Database.Repositories
             await using var db = new ServerDbContext();
             return db.TaskDetails.Where(x => x.UserIdentity == idUser).ToList();
         }
-
-		public static async Task RemoveAsync(uint idUser, uint idTask)
-		{
-			await using var db = new ServerDbContext();
-			var task = db.TaskDetails.Where(x => x.UserIdentity == idUser && x.TaskIdentity == idTask).FirstOrDefault();
-			if (task != null)
-			{
-				db.TaskDetails.Remove(task);
-				await db.SaveChangesAsync();
-			}
-		}
 	}
 }
