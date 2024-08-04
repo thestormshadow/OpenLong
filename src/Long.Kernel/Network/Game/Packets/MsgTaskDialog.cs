@@ -5,6 +5,11 @@ using Long.Kernel.States.User;
 using Long.Kernel.States.World;
 using Long.Kernel.States;
 using Long.Network.Packets;
+using Long.Kernel.Modules.Systems.Syndicate;
+using Org.BouncyCastle.Ocsp;
+using StreamJsonRpc;
+using static Long.Kernel.Network.Game.Packets.MsgTaskStatus;
+using System.Threading.Tasks;
 
 namespace Long.Kernel.Network.Game.Packets
 {
@@ -200,20 +205,24 @@ namespace Long.Kernel.Network.Game.Packets
                     {
                         if (TaskIdentity == 31100)
                         {
-                            //if (user.SyndicateIdentity == 0 ||
-                            //    user.SyndicateRank < SyndicateMember.SyndicateRank.DeputyLeader)
-                            //{
-                            //    return;
-                            //}
+                            if (user.SyndicateIdentity == 0 ||
+                                user.SyndicateRank < ISyndicateMember.SyndicateRank.DeputyLeader)
+                            {
+                                return;
+                            }
 
-                            //await user.Syndicate.KickOutMemberAsync(user, Text);
-                            //await user.Syndicate.SendMembersAsync(0, user);
+                            await user.Syndicate.KickOutMemberAsync(user, Text);
+                            await user.Syndicate.SendMembersAsync(0, user);
                             return;
                         }
 
                         if (TaskIdentity is > 20000000 and < 20099999)
                         {
-                            await GameAction.ExecuteActionAsync(TaskIdentity, user, null, null, string.Empty);
+							uint idTask = TaskIdentity - GlobalConstants.QUESTINFO_ACTIONBASE;
+							await user.TaskDetail.DeleteTaskAsync(idTask);
+
+                            //?? Deberia haber una acción por cada Quit de cada quest??? (Borrar ItemQuest o propiedades del usuario) (Por Definir)
+							//await GameAction.ExecuteActionAsync(TaskIdentity, user, null, null, string.Empty);
                         }
                         break;
                     }

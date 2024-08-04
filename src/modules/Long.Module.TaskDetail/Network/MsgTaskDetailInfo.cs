@@ -52,6 +52,7 @@ namespace Long.Module.TaskDetail.Network
         {
             Character user = client.Character;
             var taskDetail = user.TaskDetail.QueryTaskData(TaskIdentity);
+
             if (taskDetail != null)
             {
                 Data0 = taskDetail.Data1;

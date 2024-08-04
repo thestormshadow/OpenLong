@@ -1,6 +1,7 @@
 ﻿using Long.Database.Entities;
 using Long.Kernel.Network.Game;
 using Long.Kernel.States.User;
+using Long.Module.TaskDetail.Repositories;
 using Long.Network.Packets;
 
 namespace Long.Module.TaskDetail.Network
@@ -10,7 +11,6 @@ namespace Long.Module.TaskDetail.Network
         public List<TaskItemStruct> Tasks = new();
         public TaskStatusMode Mode { get; set; }
         public ushort Amount { get; set; }
-
         public override void Decode(byte[] bytes)
         {
             using var reader = new PacketReader(bytes);
@@ -29,8 +29,7 @@ namespace Long.Module.TaskDetail.Network
                 Tasks.Add(item);
             }
         }
-
-        public override byte[] Encode()
+		public override byte[] Encode()
         {
             using var writer = new PacketWriter();
             writer.Write((ushort)PacketType.MsgTaskStatus);
@@ -86,8 +85,16 @@ namespace Long.Module.TaskDetail.Network
                 {
                     await user.TaskDetail.CreateNewAsync((uint)taskItemStruct.Identity);
                 }
-            }
-        }
+			}
+			else if (Mode == TaskStatusMode.Remove)
+			{
+				foreach (var task in Tasks)
+				{
+					await TaskDetailRepository.RemoveAsync(client.Identity, (uint)task.Identity);
+				}
+				await client.SendAsync(this);
+			}
+		}
 
         public class TaskItemStruct
         {

@@ -544,6 +544,8 @@ namespace Long.Kernel.Managers
                 if (await module.OnReceiveAsync(actor, type, message))
                 {
                     handled = true;
+                    //On Found Break 
+                    break;
                 }
             }
             return handled;

@@ -9,20 +9,24 @@ namespace Long.Module.TaskDetail
     {
         public async Task<bool> OnReceiveAsync(GameClient actor, PacketType type, byte[] message)
         {
-            MsgBase<GameClient> msg;
-            if (type == PacketType.MsgTaskStatus)
-            {
-                msg = new MsgTaskStatus();
-            }
-            else if (type == PacketType.MsgTaskDetailInfo)
-            {
-                msg = new MsgTaskDetailInfo();
-            }
-            else
-            {
-                return false;
-            }
+			MsgBase<GameClient> msg = null;
 
+            switch (type)
+            {
+                case PacketType.MsgTaskStatus:
+                    {
+						msg = new MsgTaskStatus();
+						break;
+					}
+				case PacketType.MsgTaskDetailInfo:
+					{
+						msg = new MsgTaskDetailInfo();
+						break;
+					}
+				default:
+					return false;
+            }
+            
             if (actor?.Character?.Map == null)
             {
                 return true;
