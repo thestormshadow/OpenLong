@@ -6,7 +6,9 @@ using Long.Kernel.States.World;
 using Long.Network.Security;
 using Long.Shared.Helpers;
 using Serilog;
+using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace Long.Game
 {
@@ -111,7 +113,11 @@ namespace Long.Game
                 return INITIALIZATION_ERROR;
             }
 
-            logger.Information("Server initialized and ready to login!");
+			MinimizeFootprint();
+			minimizeMemory();
+			GC.Collect();
+
+			logger.Information("Server initialized and ready to login!");
 
             await CommandLineAsync();
 
@@ -120,8 +126,26 @@ namespace Long.Game
             await Log.CloseAndFlushAsync();
             return NO_ERROR;
         }
-
-        private static async Task CommandLineAsync()
+		#region Accelerator
+		[DllImport("psapi.dll")]
+		static extern int EmptyWorkingSet(IntPtr hwProc);
+		public static void MinimizeFootprint()
+		{
+			EmptyWorkingSet(Process.GetCurrentProcess().Handle);
+		}
+		public static void minimizeMemory()
+		{
+			GC.Collect(GC.MaxGeneration);
+			GC.WaitForPendingFinalizers();
+			SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle,
+				(UIntPtr)0xFFFFFFFF, (UIntPtr)0xFFFFFFFF);
+		}
+		[DllImport("kernel32.dll")]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		private static extern bool SetProcessWorkingSetSize(IntPtr process,
+			UIntPtr minimumWorkingSetSize, UIntPtr maximumWorkingSetSize);
+        #endregion
+		private static async Task CommandLineAsync()
         {
             string command;
             do
@@ -181,7 +205,19 @@ namespace Long.Game
                         RoleManager.ToggleCooperatorMode();
                         break;
                     }
-                default:
+				case "/reloadlua":
+					{
+						string[] splitParams = command.Split(' ');
+						if (splitParams.Length < 1)
+						{
+							Console.WriteLine($"/reloadlua ScriptId");
+							break;
+						}
+						
+                        LuaScriptManager.Reload(int.Parse(splitParams[1]));
+						break;
+					}
+				default:
                     {
                         Console.WriteLine("Unknown command.");
                         break;

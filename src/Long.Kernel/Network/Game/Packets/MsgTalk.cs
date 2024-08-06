@@ -535,6 +535,7 @@ namespace Long.Kernel.Network.Game.Packets
 
 							return true;
 						}
+					case "fly":
 					case "tele":
 						{
 							string[] awardwskill = arg.Split(new[] { ' ' }, 3, StringSplitOptions.RemoveEmptyEntries);

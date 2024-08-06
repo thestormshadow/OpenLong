@@ -814,9 +814,13 @@ namespace Long.Kernel.Scripting.Action
                         result = await ExecuteActionLuaExecuteAsync(action, param, user, role, item, inputs);
                         break;
 
-                    #endregion
+					case TaskActionType.ActionNPCLuaExecute:
+						result = await ExecuteActionNPCLuaExecuteAsync(action, param, user, role, item, inputs);
+						break;						
 
-                    default:
+					#endregion
+
+					default:
                         {
                             missingLogger.Warning($"Missing type {FormatLogString(action, param, user, role, item, inputs)}");
                             break;
@@ -1668,7 +1672,8 @@ namespace Long.Kernel.Scripting.Action
 
             ActionLuaLinkMain = 20001,
             ActionLuaExecute = 20002,
-        }
+			ActionNPCLuaExecute = 20003,
+		}
 
         public enum OpenWindow
         {

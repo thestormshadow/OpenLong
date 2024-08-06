@@ -178,9 +178,13 @@ namespace Long.Kernel.States.User
 
         #endregion
 
-        #region Statistic and Task Detail
+        #region Rebirt
+        public byte SelectedGem { get; set; }
+		#endregion
 
-        public UserStatistic Statistic { get; set; }
+		#region Statistic and Task Detail
+
+		public UserStatistic Statistic { get; set; }
         public ITaskDetail TaskDetail { get; set; }
 
         #endregion

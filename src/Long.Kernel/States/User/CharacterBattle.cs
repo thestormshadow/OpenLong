@@ -2329,6 +2329,12 @@ namespace Long.Kernel.States.User
 					status?.IncTime(700, 30000);
 				}
 
+                if (Map.Identity == 4022) //Discity
+                {
+					KoCount += 1;
+                    IStatus status = QueryStatus(StatusSet.UNKNOWN13);
+				}
+
 				if (QueryStatus(StatusSet.OBLIVION) != null)
 				{
 					oblivionMonsterCount += 1;
@@ -2875,14 +2881,16 @@ namespace Long.Kernel.States.User
 
 		public Task AwardOblivionExperienceAsync()
 		{
+			int tempKoCount = oblivionMonsterCount;
+			oblivionMonsterCount = 0;
 			if (oblivionExperience == 0)
 			{
+
 				return Task.CompletedTask;
 			}
 
 			long tempOblivionexp = oblivionExperience;
-			int tempKoCount = oblivionMonsterCount;
-			oblivionMonsterCount = 0;
+						
 			oblivionExperience = 0;
 			if (tempKoCount == OBLIVION_MAX_COUNT)
 			{

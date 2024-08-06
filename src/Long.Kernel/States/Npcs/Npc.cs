@@ -93,12 +93,16 @@ namespace Long.Kernel.States.Npcs
             get => npc.Datastr;
             set => npc.Datastr = value;
         }
+		public bool IsScriptNpc
+		{
+			get => npc.IsScriptNpc;
+			set => npc.IsScriptNpc = value;
+		}
+		#endregion
 
-        #endregion
+		#region Socket
 
-        #region Socket
-
-        public override async Task SendSpawnToAsync(Character player)
+		public override async Task SendSpawnToAsync(Character player)
         {
             await player.SendAsync(new MsgNpcInfo
             {

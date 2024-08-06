@@ -19,6 +19,10 @@ namespace Long.World
             for (var i = 0; i < mapDataCount; i++)
             {
                 uint idMap = reader.ReadUInt32();
+                if (idMap == 10137)
+                {
+
+                }
                 int length = reader.ReadInt32();
                 var name = new string(reader.ReadChars(length));
                 uint puzzle = reader.ReadUInt32();

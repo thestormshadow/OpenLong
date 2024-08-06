@@ -36,6 +36,7 @@ using static Long.Kernel.Network.Game.Packets.MsgHangUp;
 using static Long.Kernel.States.Magics.MagicData;
 using SharpCompress.Common;
 using System.Numerics;
+using Long.Kernel.States.Magics;
 
 namespace Long.Kernel.States.User
 {
@@ -3795,6 +3796,360 @@ namespace Long.Kernel.States.User
 
 		#endregion
 
+		#region Rebirth
+
+		public async Task<bool> ReincarnateAsync(ushort prof, ushort look)
+		{
+			DbRebirth data = ExperienceManager.GetRebirth(Profession, prof, 3);
+			if (data == null)
+			{
+				if (IsGm())
+				{
+					await SendAsync($"No rebirth set for {Profession} -> {prof}");
+				}
+				return false;
+			}
+
+			int requiredLevel = data.NeedLevel;
+			if (Level < requiredLevel)
+			{
+				await SendAsync(StrNotEnoughLevel);
+				return false;
+			}
+
+			if (Level >= data.NeedLevel)
+			{
+				DbLevelExperience levExp = ExperienceManager.GetLevelExperience(Level);
+				if (levExp != null)
+				{
+					float fExp = Experience / (float)levExp.Exp;
+					var metLev = (uint)(Level * 10000 + fExp * 1000);
+					if (metLev > user.MeteLevel2)
+						user.MeteLevel2 = metLev;
+				}
+				else if (Level >= MAX_UPLEV)
+				{
+					user.MeteLevel2 = MAX_UPLEV * 10000;
+				}
+			}
+
+			int forgetProfession = FirstProfession;
+			int firstProfession = PreviousProfession;
+			int previousProfession = Profession;
+			await ResetUserAttributesAsync(Metempsychosis, prof, look, data.NewLevel);
+
+			for (var pos = ItemPosition.EquipmentBegin; pos <= ItemPosition.EquipmentEnd; pos++)
+			{
+				if (UserPackage[pos] != null)
+				{
+					await UserPackage[pos].DegradeItemAsync(false);
+				}
+			}
+
+			if (UserPackage[ItemPosition.LeftHand]?.IsArrowSort() == false)
+			{
+				await UserPackage.UnEquipAsync(ItemPosition.LeftHand);
+			}
+
+			if (UserPackage[ItemPosition.RightHand]?.IsBow() == true && ProfessionSort != 4)
+			{
+				await UserPackage.UnEquipAsync(ItemPosition.RightHand);
+			}
+
+			/*
+             * Let's think that if I'm reincarnating I will lose my first profession, this means that I need to unlearn all
+             * skills that I am not supposed to have from that class.
+             * This means that possibly I need to cross First class skills from the first class and the current one,
+             * so I don't exclude skills that the current class also shares (like riding which is listed on magictypeop 4).
+             */
+			forgetProfession = forgetProfession / 10 * 10 + 1;
+			if (forgetProfession >= 100)
+			{
+				forgetProfession++;
+			}
+
+			firstProfession = firstProfession / 10 * 10 + 1;
+			if (firstProfession >= 100)
+			{
+				firstProfession++;
+			}
+
+			previousProfession = previousProfession / 10 * 10 + 1;
+			if (previousProfession >= 100)
+			{
+				previousProfession++;
+			}
+
+			bool isPureProfessional = Profession == PreviousProfession && Profession == FirstProfession;
+			if (!isPureProfessional)
+			{
+				List<ushort> pureSkills = ExperienceManager.GetMagictypeOp(MagicTypeOperation.MagicOperation.PureSkills, forgetProfession, forgetProfession, 0);
+				foreach (var magicType in pureSkills)
+				{
+					await MagicData.UnlearnMagicAsync(magicType, true);
+				}
+			}
+
+			// in this scenario, I need to remove all skills, because I have no memories of that profession
+			if (forgetProfession != firstProfession
+				&& forgetProfession != previousProfession
+				&& forgetProfession != Profession)
+			{
+				List<ushort> removeFromFirstClass = ExperienceManager.GetMagictypeOp(MagicTypeOperation.MagicOperation.FirstLifeSkills, 0, forgetProfession, 0);
+				List<ushort> keepFromCurrentClass = ExperienceManager.GetMagictypeOp(MagicTypeOperation.MagicOperation.FirstLifeSkills, 0, Profession, 0);
+				foreach (var magicType in removeFromFirstClass)
+				{
+					// if this magic does not belong to my profession, I'll remove it.
+					if (keepFromCurrentClass.All(x => x != magicType))
+					{
+						await MagicData.UnlearnMagicAsync(magicType, true);
+					}
+				}
+			}
+			else
+			{
+				List<ushort> epiphanyRemoveSkills = ExperienceManager.GetMagictypeOp(MagicTypeOperation.MagicOperation.RemoveOnRebirth, forgetProfession, Profession, 1);
+				foreach (ushort magicType in epiphanyRemoveSkills)
+				{
+					await MagicData.UnlearnMagicAsync(magicType, false);
+				}
+
+				List<ushort> epiphanyResetSkills = ExperienceManager.GetMagictypeOp(MagicTypeOperation.MagicOperation.ResetOnRebirth, forgetProfession, Profession, 1);
+				foreach (ushort magicType in epiphanyResetSkills)
+				{
+					await MagicData.ResetSkillAsync(magicType);
+				}
+			}
+
+			previousProfession = previousProfession / 10 * 10 + 5;
+			List<ushort> removeSkills = ExperienceManager.GetMagictypeOp(MagicTypeOperation.MagicOperation.RemoveOnRebirth, previousProfession, prof, 1);
+			foreach (ushort magicType in removeSkills)
+			{
+				await MagicData.UnlearnMagicAsync(magicType, false);
+			}
+
+			List<ushort> resetSkills = ExperienceManager.GetMagictypeOp(MagicTypeOperation.MagicOperation.ResetOnRebirth, previousProfession, prof, 1);
+			foreach (ushort magicType in resetSkills)
+			{
+				await MagicData.ResetSkillAsync(magicType);
+			}
+
+			List<ushort> learnSkills = ExperienceManager.GetMagictypeOp(MagicTypeOperation.MagicOperation.LearnAfterRebirth, previousProfession, prof, 1);
+			foreach (ushort magicType in learnSkills)
+			{
+				await MagicData.CreateAsync(magicType, 0);
+			}
+
+			logger.Information("User [{Id}:{Name}] reincarnated {Metem} times.", Identity, Name, Metempsychosis);
+			return true;
+		}
+
+		public async Task<bool> RebirthAsync(ushort prof, ushort look)
+		{
+			DbRebirth data = ExperienceManager.GetRebirth(Profession, prof, Metempsychosis + 1);
+			if (data == null)
+			{
+				if (IsGm())
+				{
+					await SendAsync($"No rebirth set for {Profession} -> {prof}");
+				}
+				return false;
+			}
+
+			int requiredLevel = data.NeedLevel;
+			if (Level < requiredLevel)
+			{
+				await SendAsync(StrNotEnoughLevel);
+				return false;
+			}
+
+			if (Level >= 130)
+			{
+				DbLevelExperience levExp = ExperienceManager.GetLevelExperience(Level);
+				if (levExp != null)
+				{
+					float fExp = Experience / (float)levExp.Exp;
+					var metLev = (uint)(Level * 10000 + fExp * 1000);
+					if (metLev > user.MeteLevel)
+						user.MeteLevel = metLev;
+				}
+				else if (Level >= MAX_UPLEV)
+				{
+					user.MeteLevel = MAX_UPLEV * 10000;
+				}
+			}
+
+			int metempsychosis = Math.Min(Math.Max((byte)1, Metempsychosis), (byte)2);
+			int oldProf = Profession;
+			await ResetUserAttributesAsync(Metempsychosis, prof, look, data.NewLevel);
+
+			for (var pos = ItemPosition.EquipmentBegin; pos <= ItemPosition.EquipmentEnd; pos++)
+			{
+				if (UserPackage[pos] != null)
+				{
+					await UserPackage[pos].DegradeItemAsync(false);
+				}
+			}
+
+			List<ushort> removeSkills = ExperienceManager.GetMagictypeOp(MagicTypeOperation.MagicOperation.RemoveOnRebirth, oldProf, prof, metempsychosis);
+			List<ushort> resetSkills = ExperienceManager.GetMagictypeOp(MagicTypeOperation.MagicOperation.ResetOnRebirth, oldProf, prof, metempsychosis);
+			List<ushort> learnSkills = ExperienceManager.GetMagictypeOp(MagicTypeOperation.MagicOperation.LearnAfterRebirth, oldProf, prof, metempsychosis);
+
+			foreach (ushort skill in removeSkills)
+			{
+				await MagicData.UnlearnMagicAsync(skill, false);
+			}
+
+			foreach (ushort skill in resetSkills)
+			{
+				await MagicData.ResetSkillAsync(skill);
+			}
+
+			foreach (ushort skill in learnSkills)
+			{
+				await MagicData.CreateAsync(skill, 0);
+			}
+
+			if (UserPackage[ItemPosition.LeftHand]?.IsArrowSort() == false)
+			{
+				await UserPackage.UnEquipAsync(ItemPosition.LeftHand);
+			}
+
+			if (UserPackage[ItemPosition.RightHand]?.IsBow() == true && ProfessionSort != 4)
+			{
+				await UserPackage.UnEquipAsync(ItemPosition.RightHand);
+			}
+
+			logger.Information("User [{Id}:{Name}] got {Metem} reborns.", Identity, Name, Metempsychosis);
+			return true;
+		}
+
+		public async Task ResetUserAttributesAsync(byte mete, ushort newProf, ushort newLook, int newLev)
+		{
+			if (newProf == 0) newProf = (ushort)(Profession / 10 * 10 + 1);
+			var prof = (byte)(newProf > 100 ? 10 : newProf / 10);
+
+			int force = 5, speed = 2, health = 3, soul = 0;
+			DbPointAllot pointAllot = ExperienceManager.GetPointAllot(prof, 1);
+			if (pointAllot != null)
+			{
+				force = pointAllot.Strength;
+				speed = pointAllot.Agility;
+				health = pointAllot.Vitality;
+				soul = pointAllot.Spirit;
+			}
+			else if (prof == 1)
+			{
+				force = 5;
+				speed = 2;
+				health = 3;
+				soul = 0;
+			}
+			else if (prof == 2)
+			{
+				force = 5;
+				speed = 2;
+				health = 3;
+				soul = 0;
+			}
+			else if (prof == 4)
+			{
+				force = 2;
+				speed = 7;
+				health = 1;
+				soul = 0;
+			}
+			else if (prof == 10)
+			{
+				force = 0;
+				speed = 2;
+				health = 3;
+				soul = 5;
+			}
+
+			AutoAllot = false;
+
+			int newAttrib;
+			if (mete < 2)
+			{
+				newAttrib = GetRebirthAddPoint(Profession, Level, mete) + newLev * 3;
+			}
+			else
+			{
+				// reincarnation, keep points no reset anymore or no point on reborning on 130
+				newAttrib = Math.Min(MAX_USER_ATTRIB_POINTS, Strength + Speed + Vitality + Spirit + AttributePoints); // all the user current points
+				newAttrib -= 10; // minus base class attribute points
+				newAttrib -= ((Level - 15) * 3); // minus the points awarded by levels
+			}
+
+			await SetAttributesAsync(ClientUpdateType.Atributes, (ulong)newAttrib);
+			await SetAttributesAsync(ClientUpdateType.Strength, (ulong)force);
+			await SetAttributesAsync(ClientUpdateType.Agility, (ulong)speed);
+			await SetAttributesAsync(ClientUpdateType.Vitality, (ulong)health);
+			await SetAttributesAsync(ClientUpdateType.Spirit, (ulong)soul);
+			await SetAttributesAsync(ClientUpdateType.Hitpoints, MaxLife);
+			await SetAttributesAsync(ClientUpdateType.Mana, MaxMana);
+			await SetAttributesAsync(ClientUpdateType.Stamina, DEFAULT_USER_ENERGY);
+			await SetAttributesAsync(ClientUpdateType.XpCircle, 0);
+
+			if (newLook > 0 && newLook != Mesh % 10)
+			{
+				await SetAttributesAsync(ClientUpdateType.Mesh, Mesh);
+			}
+
+			await SetAttributesAsync(ClientUpdateType.Level, (ulong)newLev);
+			await SetAttributesAsync(ClientUpdateType.Experience, 0);
+
+			if (mete == 0)
+			{
+				await SetAttributesAsync(ClientUpdateType.FirstProfession, Profession);
+				FirstProfession = Profession;
+			}
+			else if (mete == 1)
+			{
+				await SetAttributesAsync(ClientUpdateType.PreviousProfession, Profession);
+				PreviousProfession = Profession;
+			}
+			else
+			{
+				await SetAttributesAsync(ClientUpdateType.FirstProfession, PreviousProfession);
+				await SetAttributesAsync(ClientUpdateType.PreviousProfession, Profession);
+			}
+
+			mete++;
+			await SetAttributesAsync(ClientUpdateType.Class, newProf);
+			await SetAttributesAsync(ClientUpdateType.Reborn, mete);
+			await SaveAsync();
+		}
+
+		public int GetRebirthAddPoint(int oldProf, int oldLev, int metempsychosis)
+		{
+			var points = 0;
+
+			if (metempsychosis == 0)
+			{
+				if (oldProf == HIGHEST_WATER_WIZARD_PROF)
+					points += Math.Min((1 + (oldLev - 110) / 2) * ((oldLev - 110) / 2) / 2, 55);
+				else
+					points += Math.Min((1 + (oldLev - 120)) * (oldLev - 120) / 2, 55);
+			}
+			else
+			{
+				if (oldProf == HIGHEST_WATER_WIZARD_PROF)
+					points += 52 + Math.Min((1 + (oldLev - 110) / 2) * ((oldLev - 110) / 2) / 2, 55);
+				else
+					points += 52 + Math.Min((1 + (oldLev - 120)) * (oldLev - 120) / 2, 55);
+			}
+
+			return points;
+		}
+
+		public async Task<bool> UnlearnAllSkillAsync()
+		{
+			return await WeaponSkill.UnearnAllAsync();
+		}
+
+		#endregion
 
 		public enum EmoneyOperationType
         {
