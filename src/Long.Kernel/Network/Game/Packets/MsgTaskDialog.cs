@@ -167,7 +167,7 @@ namespace Long.Kernel.Network.Game.Packets
                         string idTask = user.GetTaskId(OptionIndex);
                         if (uint.TryParse(idTask, out var id))
                         {
-                            DbTask task = ScriptManager.GetTask(id);
+								DbTask task = EventManager.GetTask(id);
                             if (task == null)
                             {
                                 user.CancelInteraction();
