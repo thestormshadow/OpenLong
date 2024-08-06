@@ -15,7 +15,7 @@ namespace Long.Kernel.Managers
         {
             if (processor != null)
             {
-                logger.Error("Attempt of reloading lua processor!");
+                logger.Information("Attempt of reloading lua processor!");
                 return Task.CompletedTask;
             }
 
@@ -33,7 +33,7 @@ namespace Long.Kernel.Managers
             }
         }
 
-        public static void Run(Character user, Role role, Item item, string[] input, string script)
+		public static void Run(Character user, Role role, Item item, string[] input, string script)
         {
             if (initialized)
             {

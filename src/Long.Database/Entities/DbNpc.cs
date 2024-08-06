@@ -32,5 +32,6 @@
         [Column("base")] public virtual uint Base { get; set; }
         [Column("sort")] public virtual ushort Sort { get; set; }
         [Column("itemid")] public virtual uint? Itemid { get; set; }
-    }
+		[Column("isscriptnpc")] public virtual bool IsScriptNpc { get; set; }
+	}
 }

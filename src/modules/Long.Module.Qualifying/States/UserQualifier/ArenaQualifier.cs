@@ -354,10 +354,11 @@ namespace Long.Module.Qualifying.States.UserQualifier
             Character user = RoleManager.GetUser(idUser);
 
             LeaveQueue(idUser);
-			await user.SignOutEventAsync(this);
+			
 			if (user != null)
             {
-                user.QualifierStatus = ArenaStatus.NotSignedUp;
+				await user.SignOutEventAsync(this);
+				user.QualifierStatus = ArenaStatus.NotSignedUp;
             }
 
             return true;

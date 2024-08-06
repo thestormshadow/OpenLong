@@ -8,6 +8,8 @@ using Long.Kernel.States.Items;
 using Long.Kernel.States.User;
 using Long.Kernel.States.World;
 using Long.Network.Packets.Ai;
+using System;
+using System.Drawing;
 using System.Xml.Linq;
 using static Long.Kernel.Scripting.LUA.LuaScriptConst;
 
@@ -229,5 +231,71 @@ namespace Long.Kernel.Scripting.LUA
             }
             return true;
         }
-    }
+        [LuaFunction]
+        public bool Monster_SysDropItem(uint itemType, int userId, int amount = 1)
+        {
+            Character user = GetUser(userId);
+            Monster monster = role as Monster;
+            if (monster == null)
+            {
+                return false;
+            }
+            int quality = (int)(itemType % 10);
+            if (Item.IsEquipment(itemType) && quality > 5)
+            {
+                ServerStatisticManager.DropQualityItem(quality);
+            }
+            else if (itemType == Item.TYPE_METEOR)
+            {
+                ServerStatisticManager.DropMeteor();
+            }
+            else if (itemType == Item.TYPE_DRAGONBALL)
+            {
+                ServerStatisticManager.DropDragonBall();
+
+                if (monster != null)
+                {
+                    if (user != null)
+                    {
+						RoleManager.BroadcastWorldMsgAsync(string.Format(StrDragonBallDropped, user.Name, user.Map.Name), TalkChannel.Talk, Color.White);
+						monster.SendEffectAsync(user, "darcue").GetAwaiter().GetResult();
+                    }
+                    else
+                    {
+                        monster.SendEffectAsync("darcue", false).GetAwaiter().GetResult();
+                    }
+                }
+            }
+            else if (Item.IsGem(itemType))
+            {
+                ServerStatisticManager.DropGem((Item.SocketGem)(itemType % 1000));
+            }
+            for (int i = 0; i < amount; i++)            
+				monster.DropItemAsync(itemType, user, MapItem.DropMode.Common).GetAwaiter().GetResult();			
+            
+            return true;
+        }
+		[LuaFunction]
+		public bool SendEffectMonster(int userId, string effect)
+		{
+			Character user = GetUser(userId);
+			Monster monster = role as Monster;
+			if (user == null)
+			{
+				return false;
+			}
+			if (monster != null)
+			{
+				if (user != null)
+				{
+					monster.SendEffectAsync(user, effect).GetAwaiter().GetResult();
+				}
+				else
+				{
+					monster.SendEffectAsync(effect, false).GetAwaiter().GetResult();
+				}
+			}
+			return true;
+		}
+	}
 }

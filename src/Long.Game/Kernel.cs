@@ -7,6 +7,7 @@ using Long.Kernel.Processors;
 using Long.Kernel.Settings;
 using Long.Kernel.States;
 using Long.Kernel.Threads;
+using Long.Kernel.Utils;
 using Long.Shared.Threads;
 using Long.World;
 using Serilog;
@@ -17,14 +18,13 @@ namespace Long.Game
     public class Kernel
     {
         private static readonly ILogger logger = Log.ForContext<Kernel>();
+		public static MemoryCompressor MCompressor = new MemoryCompressor();
 
-        private static CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-
+		private static CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private static SchedulerFactory schedulerFactory { get; set; }
         private static GameServerSocket gameServerSocket { get; set; }
         private static CrossServerListener crossServerListener { get; set; }
         private static NpcServer npcServer { get; set; }
-
 		public static async Task<bool> InitializeAsync(GameServerSettings serverSettings)
         {
             try
@@ -72,6 +72,8 @@ namespace Long.Game
 				LuaScriptManager.Run("Event_Server_Start()");
 
                 BasicThread.SetStartTime();
+
+				MCompressor.Optimize();
 
 				schedulerFactory = new SchedulerFactory();
                 await schedulerFactory.StartAsync();

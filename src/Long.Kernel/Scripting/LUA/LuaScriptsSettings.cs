@@ -12,6 +12,6 @@ namespace Long.Kernel.Scripting.LUA
                 .Bind(this);
         }
 
-        public Dictionary<int, string> Scripts { get; set; }
+        public Dictionary<int, string> MOD { get; set; }
     }
 }

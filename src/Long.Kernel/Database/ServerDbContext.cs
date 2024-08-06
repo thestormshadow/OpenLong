@@ -83,7 +83,9 @@ namespace Long.Kernel.Database
         public virtual DbSet<DbAuction> Auctions { get; set; }
         public virtual DbSet<DbAuctionAskBuy> AuctionAskBuys { get; set; }
         public virtual DbSet<DbTutor> Tutor { get; set; }
-        public virtual DbSet<DbTutorAccess> TutorAccess { get; set; }
+		public virtual DbSet<DbRebirth> Rebirths { get; set; }
+		public virtual DbSet<DbMagictypeOp> MagictypeOperations { get; set; }
+		public virtual DbSet<DbTutorAccess> TutorAccess { get; set; }
         public virtual DbSet<DbTutorBattleLimitType> TutorBattleLimitTypes { get; set; }
         public virtual DbSet<DbTutorContribution> TutorContributions { get; set; }
         public virtual DbSet<DbTutorType> TutorTypes { get; set; }

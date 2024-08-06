@@ -76,7 +76,32 @@ namespace Long.Kernel.Scripting.LUA
             return StrNone;
         }
 
-        [LuaFunction]
+		[LuaFunction]
+		public bool AddItem(uint itemId, int amount = 1)
+		{
+			DbItemtype itemtype = ItemManager.GetItemtype(itemId);
+			if (itemtype == null)
+			{
+				user.SendAsync($"[AwardItem] Itemtype {itemId} not found");
+				return false;
+			}
+
+			if (user.UserPackage.IsPackSpare(amount, itemId))
+			{
+				for (int i = 0; i < amount; i++)
+				{
+					user.UserPackage.AwardItemAsync(itemId);
+				}
+			}
+			else
+			{
+				Monster_SysDropItem(itemId, (int)user.Identity, amount);
+			}
+
+			return true;
+		}
+
+		[LuaFunction]
         public bool AddNewItem(int userId,
             uint itemType,
             byte flag,
@@ -362,5 +387,17 @@ namespace Long.Kernel.Scripting.LUA
                 default: return string.Empty;
             }
         }
-    }
+
+		[LuaFunction]
+		public bool CheckAccumulate(int userId, int itemId, int itemNum, int bound = 0, int sash = 0)
+		{
+			Character user = GetUser(userId);
+			if (user == null)
+			{
+				return false;
+			}
+
+			return user.UserPackage.CheckAccumulate((uint)itemId, itemNum, bound != 0, sash != 0);
+		}
+	}
 }

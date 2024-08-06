@@ -18,7 +18,7 @@ namespace Long.Kernel.Scripting.LUA
     {
         private static readonly ILogger logger = Logger.CreateSysConsoleLogger("lua");
 
-        private readonly Lua lua;
+        private Lua lua;
         private object syncObject = new object();
         private List<LuaExecutionInfo> executionInfoList = new List<LuaExecutionInfo>();
 
@@ -34,9 +34,15 @@ namespace Long.Kernel.Scripting.LUA
             Initialize();
         }
 
+        private void reloadProcesor()
+        {
+			lua = new Lua();
+			OnlyReload();
+		}
+
         private void Initialize()
         {
-            foreach (var item in new LuaScriptsSettings().Scripts)
+            foreach (var item in new LuaScriptsSettings().MOD)
             {
                 string[] splitPath = item.Value.Split(new char[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
                 string realPath = Path.Combine(splitPath);
@@ -56,7 +62,28 @@ namespace Long.Kernel.Scripting.LUA
             Execute(null, null, null, Array.Empty<string>(), "Event_Server_Start()");
         }
 
-        private void RegisterLocalFunctions()
+		private void OnlyReload()
+		{
+			foreach (var item in new LuaScriptsSettings().MOD)
+			{
+				string[] splitPath = item.Value.Split(new char[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
+				string realPath = Path.Combine(splitPath);
+				realPath = Path.Combine(Environment.CurrentDirectory, "lua", realPath);
+				if (!File.Exists(realPath))
+				{
+					logger.Warning("Script file \"{0}\" not found!", item.Value);
+					continue;
+				}
+
+#if DEBUG
+				logger.Debug("Loading LUA Script {0}={1}", item.Key, Path.Combine(splitPath));
+#endif
+				lua.DoFile(realPath);
+			}
+			RegisterLocalFunctions();
+		}
+
+		private void RegisterLocalFunctions()
         {
             foreach (var method in GetType().GetMethods().Where(x => x.IsPublic))
             {
@@ -70,7 +97,6 @@ namespace Long.Kernel.Scripting.LUA
 #if DEBUG
                 logger.Debug("Lua function {0} registered!", method.Name);
 #endif
-
                 lua.RegisterFunction(method.Name, this, method);
             }
         }
@@ -79,7 +105,7 @@ namespace Long.Kernel.Scripting.LUA
         {
             lock (syncObject)
             {
-                if (new LuaScriptsSettings().Scripts.TryGetValue(idScript, out var file))
+                if (new LuaScriptsSettings().MOD.TryGetValue(idScript, out var file))
                 {
                     string[] splitPath = file.Split('\\');
                     string realPath = Path.Combine(splitPath);
@@ -90,11 +116,14 @@ namespace Long.Kernel.Scripting.LUA
                         return;
                     }
                     lua.DoFile(realPath);
+                    logger.Information($"Script {idScript} file {file} is reload");
                 }
+                else                
+                    reloadProcesor();                
             }
         }
 
-        public bool Execute(Character user, Role role, Item item, string[] input, string script)
+		public bool Execute(Character user, Role role, Item item, string[] input, string script)
         {
             lock (syncObject)
             {

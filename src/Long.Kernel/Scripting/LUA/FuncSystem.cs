@@ -19,7 +19,7 @@ namespace Long.Kernel.Scripting.LUA
     public sealed partial class LuaProcessor
     {
         [LuaFunction]
-        public bool MenuText(string text, int line)
+        public bool MenuText(string text, int line = 0)
         {
             Character user = GetUser(0);
             if (user == null)
@@ -64,8 +64,29 @@ namespace Long.Kernel.Scripting.LUA
             }).GetAwaiter().GetResult();
             return true;
         }
+		[LuaFunction]
+		public bool MenuOption(string text, int option = 0)
+		{
+			if (user == null)
+			{
+				return false;
+			}
 
-        [LuaFunction]
+			if (string.IsNullOrEmpty(text))
+			{
+				return false;
+			}
+
+			user.SendAsync(new MsgTaskDialog
+			{
+				InteractionType = MsgTaskDialog.TaskInteraction.Option,
+				Text = text,
+				OptionIndex = user.PushTaskId(option.ToString()),
+				Data = (ushort)option
+			}).GetAwaiter().GetResult();
+			return true;
+		}
+		[LuaFunction]
         public bool MenuEdit(string text, int length, int password, string function)
         {
             Character user = GetUser(0);
@@ -83,8 +104,24 @@ namespace Long.Kernel.Scripting.LUA
             }).GetAwaiter().GetResult();
             return true;
         }
+		[LuaFunction]
+		public bool MenuInput(string text, int task = 0, int length = 0)
+		{
+			if (user == null)
+			{
+				return false;
+			}
 
-        [LuaFunction]
+			user.SendAsync(new MsgTaskDialog
+			{
+				InteractionType = MsgTaskDialog.TaskInteraction.Input,
+				OptionIndex = user.PushTaskId(task.ToString()),
+				Data = (ushort)length,
+				Text = text
+			}).GetAwaiter().GetResult();
+			return true;
+		}
+		[LuaFunction]
         public bool MenuPic(int w, int h, int faceNum, string function)
         {
             Character user = GetUser(0);
@@ -101,8 +138,24 @@ namespace Long.Kernel.Scripting.LUA
             }).GetAwaiter().GetResult();
             return true;
         }
+		[LuaFunction]
+		public bool MenuAvatar(int faceNum)
+		{
+			if (user == null)
+			{
+				return false;
+			}
 
-        [LuaFunction]
+			user.SendAsync(new MsgTaskDialog
+			{
+				TaskIdentity = (uint)(10 << 16 | 10),
+				InteractionType = MsgTaskDialog.TaskInteraction.Avatar,
+				Data = (ushort)faceNum
+			}).GetAwaiter().GetResult();
+			return true;
+		}
+
+		[LuaFunction]
         public bool MsgBox(string text, string successFunction, string failFunction)
         {
             Character user = GetUser(0);
@@ -122,9 +175,8 @@ namespace Long.Kernel.Scripting.LUA
         }
 
         [LuaFunction]
-        public bool MenuCreate(int userId, string function)
+        public bool MenuCreate()
         {
-            Character user = GetUser(userId);
             if (user == null)
             {
                 return false;
@@ -984,5 +1036,24 @@ namespace Long.Kernel.Scripting.LUA
             }
             return true;
         }
-    }
+		[LuaFunction]
+		public int GetSysTempData(uint num, int MapId, uint MonsterId)
+		{
+			GameMap gameMap = GetGameMap(MapId);
+			if (gameMap == null)
+			{
+				return 0;
+			}
+
+
+			return RoleManager
+							  .QueryRoles(x => x is Monster mob && mob.Identity == MonsterId && mob.IsAlive)
+							  .Count;
+		}
+		[LuaFunction]
+		public bool SetSysTempData(int num, int MapId, uint MonsterId, int data)
+		{
+			return true;
+		}
+	}
 }

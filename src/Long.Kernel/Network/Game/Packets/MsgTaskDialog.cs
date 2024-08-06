@@ -10,6 +10,7 @@ using Org.BouncyCastle.Ocsp;
 using StreamJsonRpc;
 using static Long.Kernel.Network.Game.Packets.MsgTaskStatus;
 using System.Threading.Tasks;
+using Long.Kernel.States.Npcs;
 
 namespace Long.Kernel.Network.Game.Packets
 {
@@ -164,40 +165,59 @@ namespace Long.Kernel.Network.Game.Packets
                             return;
                         }
 
-                        string idTask = user.GetTaskId(OptionIndex);
-                        if (uint.TryParse(idTask, out var id))
+						Npc npc = targetRole as Npc;
+                        if (npc != null && npc.IsScriptNpc)
                         {
-                            DbTask task = ScriptManager.GetTask(id);
-                            if (task == null)
-                            {
-                                user.CancelInteraction();
-
-                                if (OptionIndex != 0)
-                                {
-                                    if (user.IsGm() && id != 0)
-                                    {
-                                        await user.SendAsync($"Could not find InteractionAsnwer for task {idTask}");
-                                    }
-                                }
-
-                                return;
-                            }
-
-                            user.ClearTaskId();
-                            await GameAction.ExecuteActionAsync(user.TestTask(task) ? task.IdNext : task.IdNextfail, user,
-                                targetRole, user.UserPackage.FindItemByIdentity(user.InteractingItem), Text);
-                        }
-                        else
+							string idOption = user.GetTaskId(OptionIndex);
+							user.ClearTaskId();
+							user.CancelInteraction();
+							if (uint.TryParse(npc.Task0.ToString(), out var id))
+							{
+								DbTask task = EventManager.GetTask(id);
+								if (task != null)
+									await GameAction.ExecuteActionAsync(task.IdNext, user, targetRole, user.UserPackage.FindItemByIdentity(user.InteractingItem), idOption.ToString());
+								else								
+									await GameAction.ExecuteActionAsync(id, user, targetRole, user.UserPackage.FindItemByIdentity(user.InteractingItem), Text);
+							}
+						}
+						else
                         {
-                            string function = LuaScriptManager.ParseTaskDialogAnswerToScript(idTask);
-                            if (function.StartsWith("NULL"))
-                            {
-                                user.CancelInteraction();
-                                return;
-                            }
+							string idTask = user.GetTaskId(OptionIndex);
+							if (uint.TryParse(idTask, out var id))
+							{
+								DbTask task = EventManager.GetTask(id);
+								if (task == null)
+								{
+									user.CancelInteraction();
 
-                            LuaScriptManager.Run(user, targetRole, user.UserPackage.FindItemByIdentity(user.InteractingItem), new string[] { Text }, function);
-                        }
+									if (OptionIndex != 0)
+									{
+										if (user.IsGm() && id != 0)
+										{
+											await user.SendAsync($"Could not find InteractionAsnwer for task {idTask}");
+										}
+									}
+
+									return;
+								}
+
+								user.ClearTaskId();
+								await GameAction.ExecuteActionAsync(user.TestTask(task) ? task.IdNext : task.IdNextfail, user,
+									targetRole, user.UserPackage.FindItemByIdentity(user.InteractingItem), Text);
+							}
+							else
+							{
+								string function = LuaScriptManager.ParseTaskDialogAnswerToScript(idTask);
+								if (function.StartsWith("NULL"))
+								{
+									user.CancelInteraction();
+									return;
+								}
+
+								LuaScriptManager.Run(user, targetRole, user.UserPackage.FindItemByIdentity(user.InteractingItem), new string[] { Text }, function);
+							}
+						}
+						
                         break;
                     }
 

@@ -948,5 +948,47 @@ namespace Long.Kernel.Scripting.LUA
             }).GetAwaiter().GetResult();
             return true;
         }
-    }
+		[LuaFunction]
+		public byte GetRebornGemSelected(int userId)
+		{
+			Character user = GetUser(userId);
+			if (user == null)
+				return 0;
+
+			return user.SelectedGem;
+		}
+		[LuaFunction]
+		public bool SetRebornGem(int userId, byte idGem)
+		{
+			Character user = GetUser(userId);
+			if (user == null)
+				return false;
+
+			user.SelectedGem = idGem;
+
+			return true;
+		}
+		[LuaFunction]
+		public bool Reborn(int userId, byte classid)
+		{
+			Character user = GetUser(userId);
+			if (user == null)
+				return false;
+
+			if (user.RebirthAsync(classid, (ushort)user.Mesh).Result)
+			{
+				DeleteItem((int)user.Identity, 721259, 0, 0);
+				user.BroadcastRoomMsgAsync(new MsgName
+				{
+					Identity = user.Identity,
+					Action = StringAction.Fireworks
+				}, true).GetAwaiter();
+				RoleManager.BroadcastWorldMsgAsync($"Congratulations! {user.Name} got reborn!", TalkChannel.Center, Color.White);
+			}
+			else
+				return false;
+
+			return true;
+		}
+	}
 }

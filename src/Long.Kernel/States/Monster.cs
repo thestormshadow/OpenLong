@@ -426,8 +426,16 @@ namespace Long.Kernel.States
 			if (monsterType.Action > 0)
 			{
 				DbAction action = EventManager.GetAction(monsterType.Action);
-				if (action != null)
-					await GameAction.ExecuteActionAsync(monsterType.Action, user, this, null, string.Empty);
+				try
+				{
+					if (action != null)
+						await GameAction.ExecuteActionAsync(monsterType.Action, user, this, null, string.Empty);
+				}
+				catch (Exception e)
+				{
+					Log.Warning($"Function LUA Script not found, function name: {action.Param}");
+				}
+				
 
 			}
 

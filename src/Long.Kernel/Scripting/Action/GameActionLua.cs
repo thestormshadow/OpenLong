@@ -34,7 +34,7 @@ namespace Long.Kernel.Scripting.Action
             string[] splitParams = SplitParam(param, 2);
             if (user != null)
             {
-                LuaScriptManager.Run(user, role, item, input, $"return {splitParams[0]}({splitParams[1]}, {user.Identity})");
+                LuaScriptManager.Run(user, role, item, input, $"return {splitParams[0]}({user.Identity})");
             }
             else
             {
@@ -42,5 +42,37 @@ namespace Long.Kernel.Scripting.Action
             }
             return true;
         }
-    }
+		private static async Task<bool> ExecuteActionNPCLuaExecuteAsync(DbAction action, string param, Character user, Role role, Item item, string[] input)
+		{
+			string function = string.Empty;
+			string[] splitParams = SplitParam(param, 2);
+			if (user != null)
+			{
+				if (input == null || input.Length == 0 || input[0] == "")
+				{
+					function += $"{splitParams[0]}({user.Identity}";
+					for (int i = 1; i < splitParams.Length; i++)
+					{
+						function += $",{splitParams[i]}";
+					}
+					LuaScriptManager.Run(user, role, item, input, $"{function})");
+				}
+                else
+                {
+                    function += $"{splitParams[0]}({user.Identity}";
+                    for (int i = 0; i < input.Length; i++)
+                    {
+						function += $",{input[i]}";
+					}
+					LuaScriptManager.Run(user, role, item, input, $"{function})");
+				}					
+			}
+			else
+			{
+				LuaScriptManager.Run(user, role, item, input, $"{splitParams[0]}({splitParams[1]})");
+			}
+			return true;
+		}
+		
+	}
 }
