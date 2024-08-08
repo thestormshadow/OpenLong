@@ -1,15 +1,19 @@
 ﻿using System.Configuration.Internal;
 using System.Drawing;
+using System.Reflection.PortableExecutable;
 using Long.Database.Entities;
 using Long.Game.Network.Ai.Packets;
 using Long.Kernel.Database;
 using Long.Kernel.Managers;
+using Long.Kernel.Modules.Systems.Competion;
+using Long.Kernel.Modules.Systems.Qualifier;
 using Long.Kernel.Modules.Systems.Syndicate;
 using Long.Kernel.Network.Ai;
 using Long.Kernel.Network.Cross.Client.Packets;
 using Long.Kernel.Processors;
 using Long.Kernel.Scripting.Action;
 using Long.Kernel.States;
+using Long.Kernel.States.Events;
 using Long.Kernel.States.Items;
 using Long.Kernel.States.Magics;
 using Long.Kernel.States.MessageBoxes;
@@ -25,6 +29,7 @@ using Long.World.Map;
 using Newtonsoft.Json;
 using Org.BouncyCastle.Asn1.X509;
 using static Long.Kernel.Network.Game.Packets.MsgAction;
+using static Long.Kernel.States.Events.GameEvent;
 
 namespace Long.Kernel.Network.Game.Packets
 {
@@ -1008,12 +1013,26 @@ namespace Long.Kernel.Network.Game.Packets
 
                             return true;
                         }
+					case "ctf":
+						{
+							await CTFManager.PrepareEventAsync();
+							await RoleManager.BroadcastWorldMsgAsync($"{user.Name} has forced Capture The Flag to start!!!", TalkChannel.Talk);
+							return true;
+						}
 
-                    #region DEBUG test commands
+					case "endctf":
+						{
+							await CTFManager.EndEventAsync();
+							await RoleManager.BroadcastWorldMsgAsync($"{user.Name} has forced Capture The Flag to end!!!", TalkChannel.Talk);
+							return true;
+
+						}												
+
+					#region DEBUG test commands
 
 #if DEBUG
 
-                    case "stagegoal":
+					case "stagegoal":
                         {
                             string[] p = arg.Split(' ');
                             if (p.Length < 2)

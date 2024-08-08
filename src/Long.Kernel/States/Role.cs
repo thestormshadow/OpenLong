@@ -1134,7 +1134,10 @@ namespace Long.Kernel.States
             return false;
         }
 
-        public virtual IStatus QueryStatus(int nType)
+        public bool HasFlagCTF() => QueryStatus(StatusSet.CTF_FLAG) != null;
+
+
+		public virtual IStatus QueryStatus(int nType)
         {
             var status = StatusSet?.GetObjByIndex(nType);
             if (status != null && status.IsValid)

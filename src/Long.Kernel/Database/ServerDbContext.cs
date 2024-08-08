@@ -148,6 +148,9 @@ namespace Long.Kernel.Database
         public virtual DbSet<DbEMoneyMono> EMoneyMonoLogs { get; set; }
 		public virtual DbSet<DbAwardConfig> AwardConfigs { get; set; }
 		public virtual DbSet<DbChangeNameBackup> ChangeNameBackups { get; set; }
+		public virtual DbSet<DbMeedRecord> MeedRecords { get; set; }
+		public virtual DbSet<DbSetMeed> SetMeeds { get; set; }
+		public virtual DbSet<DbSynCompeteRank> SynCompeteRanks { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

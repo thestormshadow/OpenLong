@@ -672,6 +672,15 @@ namespace Long.Kernel.Network.Game.Packets
                             return;
                         }
 
+                        if (role.Map.Identity == 2057 && role.HasFlagCTF())
+                        {
+							if (role is Character player)
+							{
+								await player.KickbackAsync();
+							}
+							return;
+						}
+
                         ushort newX = (ushort)Command;
                         ushort newY = (ushort)(Command >> 16);
 
