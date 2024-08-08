@@ -1,6 +1,7 @@
 ﻿using Long.Database.Entities;
 using Long.Kernel.Database;
 using Long.Kernel.Database.Repositories;
+using Long.Kernel.Modules.Systems;
 using Long.Kernel.Scripting.Action;
 using Long.Kernel.States;
 using Long.Kernel.States.Events;
@@ -285,12 +286,12 @@ public class EventManager
         return events.Values.FirstOrDefault(x => x.GetType() == typeof(T)) as T;
     }
 
-    public static GameEvent GetEvent(GameEvent.EventType type)
+	public static GameEvent GetEvent(GameEvent.EventType type)
     {
         return events.TryGetValue(type, out GameEvent ev) ? ev : null;
     }
 
-    public static GameEvent GetEvent(uint idMap)
+	public static GameEvent GetEvent(uint idMap)
     {
         return events.Values.FirstOrDefault(x => x.Map?.Identity == idMap);
     }

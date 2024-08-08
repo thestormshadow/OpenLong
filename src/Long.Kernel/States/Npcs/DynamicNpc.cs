@@ -2,9 +2,13 @@
 using System.Globalization;
 using Long.Database.Entities;
 using Long.Kernel.Database;
+using Long.Kernel.Managers;
 using Long.Kernel.Modules.Systems.Syndicate;
 using Long.Kernel.Network.Game.Packets;
+using Long.Kernel.Scripting.Action;
 using Long.Kernel.States.User;
+using Long.Shared.Mathematics;
+using static Long.Kernel.States.Magics.Magic;
 
 namespace Long.Kernel.States.Npcs
 {
@@ -35,10 +39,18 @@ namespace Long.Kernel.States.Npcs
     //            }
             }
         }
+		#region Socket
 
-        #region Type
+		public override Task SendSpawnToAsync(Character player)
+		{
+			return player.SendAsync(new MsgNpcInfoEx(this));
+		}
 
-        public override uint Identity
+		#endregion
+
+		#region Type
+
+		public override uint Identity
         {
             get => npc.Id % 1_000_000;
             init => base.Identity = value;
@@ -278,11 +290,107 @@ namespace Long.Kernel.States.Npcs
             scores.Clear();
         }
 
-        #endregion
+		#endregion
 
-        #region Task
+		#region Battle
 
-        public uint LinkId
+		public bool IsActive()
+		{
+			return !deathTimer.IsActive();
+		}
+
+		public override bool IsAttackable(Role attacker)
+		{
+			if (!IsSynFlag() && !IsCtfFlag() && !IsGoal() && !IsCityGate())
+			{
+				return false;
+			}
+
+			if (Data1 != 0 && Data2 != 0)
+			{
+				var strNow = "";
+				DateTime now = DateTime.Now;
+				strNow += (now.DayOfWeek == 0 ? 7 : (int)now.DayOfWeek).ToString(CultureInfo.InvariantCulture);
+				strNow += $"{now:HHmmss}";
+
+				int now0 = int.Parse(strNow);
+				if (now0 < Data1 || now0 >= Data2)
+				{
+					return false;
+				}
+
+				if ((IsSynFlag() || IsCtfFlag()) && attacker is Character user)
+				{
+					if (user.SyndicateIdentity == OwnerIdentity)
+					{
+						return false;
+					}
+				}
+			}
+
+			return IsActive();
+		}
+
+		public override async Task<bool> BeAttackAsync(MagicType magic, Role attacker, int power,
+													   bool reflectEnable)
+		{
+			var decreaseLife = (int)Calculations.CutOverflow(Life, power);
+			await AddAttributesAsync(ClientUpdateType.Hitpoints, decreaseLife * -1);
+			if (IsSynNpc() && IsSynFlag() && OwnerIdentity != 0)
+			{
+				ISyndicate syn = SyndicateManager.GetSyndicate(OwnerIdentity);
+				if (syn != null && syn.Money > 0 && attacker is Character user)
+				{
+					if (user.SyndicateIdentity != OwnerIdentity)
+					{
+						int addProffer = Calculations.MulDiv(power, SYNWAR_PROFFER_PERCENT, 100);
+						addProffer = (int)Math.Min(syn.Money, addProffer);
+						syn.Money = Math.Max(0, syn.Money - addProffer);
+
+						await user.AwardMoneyAsync(addProffer);
+						_ = syn.SaveAsync();
+					}
+				}
+			}
+
+			if (!IsAlive)
+			{
+				await BeKillAsync(attacker);
+			}
+
+			return true;
+		}
+
+		public override async Task BeKillAsync(Role attacker)
+		{
+			var currentEvent = EventManager.GetEvent(MapIdentity);
+			if (currentEvent != null)
+			{
+				await currentEvent.OnBeKillAsync(attacker, this, null);
+			}
+
+			if (npc.Linkid != 0)
+			{
+				await GameAction.ExecuteActionAsync(npc.Linkid, attacker as Character, this, null, string.Empty);
+			}
+		}
+
+		public int GetMaxFixMoney()
+		{
+			return (int)Calculations.CutRange(Calculations.MulDiv(MaxLife - 1, 1, 1) + 1, 0, MaxLife);
+		}
+
+		public int GetLostFixMoney()
+		{
+			var nLostLifeTmp = (int)(MaxLife - Life);
+			return (int)Calculations.CutRange(Calculations.MulDiv(nLostLifeTmp - 1, 1, 1) + 1, 0, MaxLife);
+		}
+
+		#endregion
+
+		#region Task
+
+		public uint LinkId
         {
             get => npc.Linkid;
             set => npc.Linkid = value;
@@ -405,16 +513,7 @@ namespace Long.Kernel.States.Npcs
         }
 
         #endregion
-
-        #region Socket
-
-        public override Task SendSpawnToAsync(Character player)
-        {
-            return player.SendAsync(new MsgNpcInfoEx(this));
-        }
-
-        #endregion
-
+        
         public class Score
         {
             public Score(uint id, string name)

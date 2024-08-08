@@ -1,5 +1,6 @@
 ﻿
 
+using Long.Kernel.Modules.Systems;
 using Long.Kernel.States.Items;
 using Long.Kernel.States.Magics;
 using Long.Kernel.States.User;
@@ -8,7 +9,7 @@ using Long.Kernel.States.World;
 namespace Long.Kernel.States.Events
 {
     public abstract class GameEvent
-    {
+	{
         protected enum EventStage
         {
             Idle,
@@ -53,7 +54,7 @@ namespace Long.Kernel.States.Events
 
         private readonly TimeOutMS eventCheck;
 
-        protected GameEvent(string name, int timeCheck = 1000)
+		protected GameEvent(string name, int timeCheck = 1000)
         {
             Name = name;
             eventCheck = new TimeOutMS(timeCheck);
