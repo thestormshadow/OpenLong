@@ -182,7 +182,7 @@ namespace Long.Kernel.States.Events
 
 		public virtual Task<bool> OnMove(Character user, Move moveLevel)
 		{
-			return Task.FromResult(MoveLevel == moveLevel);
+			return Task.FromResult(true);
 		}
 
 		/// <summary>
