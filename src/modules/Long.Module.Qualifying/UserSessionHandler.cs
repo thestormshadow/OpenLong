@@ -1,5 +1,7 @@
 ﻿using Long.Kernel.Modules.Interfaces;
 using Long.Kernel.States.User;
+using Long.Module.Qualifying.Network;
+using static Microsoft.VisualStudio.Threading.AsyncReaderWriterLock;
 
 namespace Long.Module.Qualifying
 {
@@ -10,10 +12,10 @@ namespace Long.Module.Qualifying
             return Task.CompletedTask;
         }
 
-        public Task OnUserLoginCompleteAsync(Character user)
+        public async Task OnUserLoginCompleteAsync(Character user)
         {
-            return Task.CompletedTask;
-        }
+			await new MsgTeamArenaHeroData().ProcessAsync(user.Client);
+		}
 
         public async Task OnUserLogoutAsync(Character user)
         {

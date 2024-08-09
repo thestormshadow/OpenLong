@@ -537,7 +537,7 @@ namespace Long.Kernel.States.User
 
 		public int TeamQualifierRank => EventManager.GetIEvent<ITeamQualifier>()?.GetPlayerRanking(Identity) ?? 0;
 
-		public ArenaStatus TeamQualifierStatus => Team.QualifierStatus;
+		public ArenaStatus TeamQualifierStatus => Team?.QualifierStatus ?? ArenaStatus.NotSignedUp;
 
 		public uint TeamQualifierPoints
 		{

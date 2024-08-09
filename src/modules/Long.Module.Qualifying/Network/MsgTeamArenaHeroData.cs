@@ -16,7 +16,6 @@ namespace Long.Module.Qualifying.Network
         public int CurrentHonor { get; set; }
         public int Points { get; set; }
         public int Unknown40 { get; set; }
-        public int Unknown44 { get; set; }
 
         public override void Decode(byte[] bytes)
         {
@@ -33,7 +32,6 @@ namespace Long.Module.Qualifying.Network
             CurrentHonor = reader.ReadInt32();
             Points = reader.ReadInt32();
             Unknown40 = reader.ReadInt32();
-            Unknown44 = reader.ReadInt32();
         }
 
         public override byte[] Encode()
@@ -50,14 +48,17 @@ namespace Long.Module.Qualifying.Network
             writer.Write(CurrentHonor); // 32
             writer.Write(Points); // 36
             writer.Write(Unknown40); // 40
-            writer.Write(Unknown44); // 44
             return writer.ToArray();
         }
 
-        public override Task ProcessAsync(GameClient client)
+        public async override Task ProcessAsync(GameClient client)
         {
             Character user = client.Character;
-            Rank = user.TeamQualifierRank;
+			if (user == null)
+			{
+				return;
+			}
+			Rank = user.TeamQualifierRank;
             Status = (int)user.TeamQualifierStatus;
             TodayVitory = (int)user.TeamQualifierDayWins;
             TodayDefeat = (int)user.TeamQualifierDayLoses;
@@ -66,7 +67,9 @@ namespace Long.Module.Qualifying.Network
             HistoryHonor = (int)user.HistoryHonorPoints;
             CurrentHonor = (int)user.HonorPoints;
             Points = (int)user.TeamQualifierPoints;
-            return client.SendAsync(this);
+            Unknown40 = 0;
+
+			await client.SendAsync(this);
         }
     }
 }
