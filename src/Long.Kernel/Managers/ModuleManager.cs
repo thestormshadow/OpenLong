@@ -3,7 +3,7 @@ using Long.Kernel.Modules;
 using Long.Kernel.Modules.Interfaces;
 using Long.Kernel.Modules.Managers;
 using Long.Kernel.Modules.Systems.AstProf;
-using Long.Kernel.Modules.Systems.Competion;
+using Long.Kernel.Modules.Systems.Events;
 using Long.Kernel.Modules.Systems.Family;
 using Long.Kernel.Modules.Systems.Fate;
 using Long.Kernel.Modules.Systems.JiangHu;
@@ -74,6 +74,7 @@ namespace Long.Kernel.Managers
         public static IJiangHuManager JiangHuManager { get; set; }
         public static INeiGongManager NeiGongManager { get; set; }
 		public static ICaptureTheFlag CTFManager { get; set; }
+		public static ILineSkillPK LSPKManager { get; set; }
 
 		public static bool IsModuleLoaded(ModuleEnum module)
         {

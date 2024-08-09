@@ -1189,7 +1189,7 @@ namespace Long.Kernel.States.Magics
 				await currentEvent.OnAttackAsync(user);
 			}
 
-			if (user != null)
+			if (user != null && user.ClassType == Character.BaseClassType.Trojan)
 			{
 				if (miss)
 				{
@@ -1679,7 +1679,7 @@ namespace Long.Kernel.States.Magics
 				}
 
 				if (role.IsImmunity(target)
-					|| !target.IsAttackable(role))
+					|| !target.IsAttackable(role, magic))
 				{
 					continue;
 				}
@@ -1745,7 +1745,7 @@ namespace Long.Kernel.States.Magics
 			{
 				await user.SendWeaponMagic2Async();
 
-				if (miss)
+				if (miss && user.ClassType == Character.BaseClassType.Trojan)
 				{
 					await user.ProcessMagicAttackAsync((ushort)BREATH_FOCUS, user.Identity, user.X, user.Y, (uint)AutoActive.OnAttack);
 				}
@@ -1761,7 +1761,6 @@ namespace Long.Kernel.States.Magics
 			await AwardExpAsync(0, battleExp, exp, magic);
 			return true;
 		}
-
 		#endregion
 
 		#region 16 - Attack Status
@@ -4600,7 +4599,7 @@ namespace Long.Kernel.States.Magics
 				}
 			}
 
-			if (user != null)
+			if (user != null && user.ClassType == Character.BaseClassType.Trojan)
 			{
 				if (miss)
 				{

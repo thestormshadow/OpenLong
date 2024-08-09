@@ -7,10 +7,12 @@ namespace Long.Module.Events
 {
     public sealed class EventTimer : IEventTimer
     {
-        public Task OnEventTimerAsync()
+        public async Task OnEventTimerAsync()
         {
-			CaptureTheFlag ctf = EventManager.GetEvent<CaptureTheFlag>();			
-			return ctf.OnTimerAsync();
+			CaptureTheFlag ctf = EventManager.GetEvent<CaptureTheFlag>();
+			await ctf.OnTimerAsync();
+			LineSkillPK LineSkill = EventManager.GetEvent<LineSkillPK>();
+			await LineSkill.OnTimerAsync();
 		}
     }
 }

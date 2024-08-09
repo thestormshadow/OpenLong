@@ -37,6 +37,7 @@ using static Long.Kernel.States.Magics.MagicData;
 using SharpCompress.Common;
 using System.Numerics;
 using Long.Kernel.States.Magics;
+using Long.Kernel.Modules.Systems.Qualifier;
 
 namespace Long.Kernel.States.User
 {
@@ -189,7 +190,6 @@ namespace Long.Kernel.States.User
         #region Profession
 
         public byte ProfessionSort => (byte)(Profession / 10);
-
         public byte ProfessionLevel => (byte)(Profession % 10);
 
         public byte Profession
@@ -294,11 +294,19 @@ namespace Long.Kernel.States.User
 
         public int TotalAttributePoints => Strength + Speed + Vitality + Spirit + AttributePoints;
 
-        #endregion
+        public BaseClassType ClassType 
+        { 
+            get 
+            {
+				return (BaseClassType)Profession-5;
+			}
+		}
 
-        #region Life and Mana
+		#endregion
 
-        public override uint Life
+		#region Life and Mana
+
+		public override uint Life
         {
             get => user.HealthPoints;
             set => user.HealthPoints = Math.Min(MaxLife, value);
@@ -376,6 +384,7 @@ namespace Long.Kernel.States.User
 
 
 		#endregion
+
 		#region Currency
 
         public ulong Silvers
@@ -892,38 +901,63 @@ namespace Long.Kernel.States.User
             set => user.Y = value;
         }
 
-        public override async Task EnterMapAsync()
-        {
-            Map = MapManager.GetMap(idMap);
-            if (Map != null)
-            {
-                await Map.AddAsync(this);
-                await Map.SendMapInfoAsync(this);
-                await ProcessAfterMoveAsync();
-                MsgAiAction action = new MsgAiAction
-                {
-                    Data = new MsgAiActionContract
-                    {
-                        Action = AiActionType.FlyMap,
-                        Identity = Identity,
-                        TargetIdentity = idMap,
-                        X = X,
-                        Y = Y
-                    }
-                };
+		public override async Task EnterMapAsync()
+		{
+			Map = MapManager.GetMap(idMap);
+			if (Map != null)
+			{
+				await Map.AddAsync(this);
+				await Map.SendMapInfoAsync(this);
+				protectionTimer.Startup(CHGMAP_LOCK_SECS);
+				await Screen.SynchroScreenAsync();
 
-                NpcServer.Instance.Send(NpcServer.NpcClient, action.Encode());
-				await OnEnterMapAsync(this, Map);
-            }
-        }
+				var enteringEvent = EventManager.GetEvent(idMap);
+				if (enteringEvent != null)
+				{
+					if (await SignInEventAsync(enteringEvent))
+					{
+						await enteringEvent.OnEnterMapAsync(this);
+					}
+				}
 
-        public override async Task LeaveMapAsync()
-        {
-            if (Map != null)
-            {
-                await ProcessOnMoveAsync();
-                await OnLeaveMapAsync(this, Map);
-                await Map.RemoveAsync(Identity);
+				// check qualifiers map
+				var witnessEvents = EventManager.QueryWitnessEvents();
+				foreach (var witnessEvent in witnessEvents)
+				{
+					if (witnessEvent.IsWitness(this))
+					{
+						if (witnessEvent is IQualifier arenaQualifier)
+						{
+							//ArenaQualifierUserMatch match = arenaQualifier.FindMatchByMap(MapIdentity);
+							//if (match != null)
+							//{
+							//	await Task.WhenAll(SendAsync(new MsgArenicWitness()), match.SendBoardAsync());
+							//}
+						}
+						//else if (witnessEvent is TeamArenaQualifier teamQualifier)
+						//{
+						//	TeamArenaQualifierMatch match = teamQualifier.FindMatchByMap(MapIdentity);
+						//	if (match != null)
+						//	{
+						//		await Task.WhenAll(SendAsync(new MsgArenicWitness()), match.SendBoardAsync());
+						//	}
+						//}
+					}
+				}
+
+				if (Team != null)
+				{
+					await Team.SyncFamilyBattlePowerAsync();
+					await Team.ProcessAuraAsync();
+				}
+
+				if (Map.IsPkField() && QueryStatus(StatusSet.RIDING) != null)
+				{
+					await DetachStatusAsync(StatusSet.RIDING);
+				}
+
+				await ProcessAfterMoveAsync();
+
 				MsgAiAction action = new MsgAiAction
 				{
 					Data = new MsgAiActionContract
@@ -935,13 +969,69 @@ namespace Long.Kernel.States.User
 						Y = Y
 					}
 				};
+
 				NpcServer.Instance.Send(NpcServer.NpcClient, action.Encode());
 			}
+			else
+			{
+				logger.Error($"Invalid map {idMap} for user {Identity} {Name}");
+				Client?.Disconnect();
+			}
+		}
 
-            await Screen.ClearAsync();
-        }
+		public override async Task LeaveMapAsync()
+		{
+			BattleSystem.ResetBattle();
+			await MagicData.AbortMagicAsync(false);
+			StopMining();
 
-        public async Task SavePositionAsync(uint idMap, ushort x, ushort y)
+			if (Map != null)
+			{
+				await ProcessOnMoveAsync();
+				await Map.RemoveAsync(Identity);
+
+				var currentEvent = GetCurrentEvent();
+				if (currentEvent != null)
+				{
+					await currentEvent.OnExitMapAsync(this, Map);
+				}
+
+				if (Map.IsRaceTrack())
+				{
+					//await ClearRaceItemsAsync();
+				}
+
+				if (IsAutoHangUp && !reviveLeaveMap)
+				{
+					await FinishAutoHangUpAsync(HangUpMode.ChangedMap);
+				}
+				else
+				{
+					reviveLeaveMap = false;
+				}
+			}
+
+			if (Team != null)
+			{
+				await Team.SyncFamilyBattlePowerAsync();
+				await Team.ProcessAuraAsync();
+			}
+
+			MsgAiAction action = new MsgAiAction
+			{
+				Data = new MsgAiActionContract
+				{
+					Action = AiActionType.LeaveMap,
+					Identity = Identity
+				}
+			};
+
+			NpcServer.Instance.Send(NpcServer.NpcClient, action.Encode());
+
+			await Screen.ClearAsync();
+		}
+
+		public async Task SavePositionAsync(uint idMap, ushort x, ushort y)
         {
             GameMap map = MapManager.GetMap(idMap);
             if (map?.IsRecordDisable() == false)
@@ -953,96 +1043,104 @@ namespace Long.Kernel.States.User
             }
         }
 
-        public async Task<bool> FlyMapAsync(uint idMap, int x, int y)
-        {
-            if (Map == null)
-            {
-                logger.Warning("FlyMap user [{Identity}] not in map", Identity);
-                return false;
-            }
+		public async Task<bool> FlyMapAsync(uint idMap, int x, int y)
+		{
+			if (Map == null)
+			{
+				logger.Warning("FlyMap user [{Identity}] not in map", Identity);
+				return false;
+			}
 
-            if (idMap == 0)
-            {
-                idMap = MapIdentity;
-            }
+			if (idMap == 0)
+			{
+				idMap = MapIdentity;
+			}
 
-            GameMap newMap = MapManager.GetMap(idMap);
-            if (newMap == null || !newMap.IsValidPoint(x, y))
-            {
-                logger.Error("FlyMap user fly invalid position {idMap}[{x},{y}]", idMap, x, y);
-                return false;
-            }
+			GameMap newMap = MapManager.GetMap(idMap);
+			if (newMap == null || !newMap.IsValidPoint(x, y))
+			{
+				logger.Fatal("FlyMap user fly invalid position {idMap}[{x},{y}]", idMap, x, y);
+				return false;
+			}
 
-            if (!newMap.IsStandEnable(x, y))
-            {
-                bool succ = false;
-                for (int i = 0; i < 8; i++)
-                {
-                    int testX = x + GameMapData.WalkXCoords[i];
-                    int testY = y + GameMapData.WalkYCoords[i];
+			if (newMap.IsRaceTrack() && QueryStatus(StatusSet.RIDING) == null)
+			{
+				if (MagicData[7001] == null || !await ProcessMagicAttackAsync(7001, Identity, X, Y))
+				{
+					logger.Warning($"Blocked flymap! User has no riding skill for map track");
+					return false;
+				}
+			}
+			else if (newMap.IsFamilyMap() && QueryStatus(StatusSet.RIDING) == null)
+			{
+				await DetachStatusAsync(StatusSet.RIDING);
+			}
 
-                    if (newMap.IsStandEnable(testX, testY))
-                    {
-                        x = testX;
-                        y = testY;
-                        succ = true;
-                        break;
-                    }
-                }
+			if (!newMap.IsStandEnable(x, y))
+			{
+				bool succ = false;
+				for (int i = 0; i < 8; i++)
+				{
+					int testX = x + GameMapData.WalkXCoords[i];
+					int testY = y + GameMapData.WalkYCoords[i];
 
-                if (!succ)
-                {
-                    newMap = MapManager.GetMap(1002);
-                    x = 300;
-                    y = 278;
-                }
-            }
+					if (newMap.IsStandEnable(testX, testY))
+					{
+						x = testX;
+						y = testY;
+						succ = true;
+						break;
+					}
+				}
 
-            try
-            {
-                await LeaveMapAsync(); // leave map on current partition
+				if (!succ)
+				{
+					newMap = MapManager.GetMap(1002);
+					x = 300;
+					y = 278;
+				}
+			}
 
-                this.idMap = newMap.Identity;
-                X = (ushort)x;
-                Y = (ushort)y;
+			try
+			{
+				await LeaveMapAsync(); // leave map on current partition
 
-                if (!newMap.IsRecordDisable())
-                {
-                    await SavePositionAsync(MapIdentity, X, Y);
-                }
+				this.idMap = newMap.Identity;
+				X = (ushort)x;
+				Y = (ushort)y;
 
-                await SendAsync(new MsgAction
-                {
-                    Identity = Identity,
-                    Command = newMap.MapDoc,
-                    X = X,
-                    Y = Y,
-                    Action = ActionType.MapTeleport,
-                    Direction = (ushort)Direction
-                });
+				await SendAsync(new MsgAction
+				{
+					Identity = Identity,
+					Command = newMap.MapDoc,
+					X = X,
+					Y = Y,
+					Action = ActionType.MapTeleport,
+					Direction = (ushort)Direction
+				});
 
-                Task characterEnterMapTaskAsync() // this is here just to display the name on processor catch
-                {
-                    return EnterMapAsync();
-                }
+				Task characterEnterMapTask()
+				{
+					return EnterMapAsync();
+				}
 
-                if (newMap.Partition == Map.Partition)
-                {
-                    await characterEnterMapTaskAsync();
-                }
-                else
-                {
-                    QueueAction(characterEnterMapTaskAsync);
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "Fly map error", ex.Message);
-            }
-            return true;
-        }
+				if (newMap.Partition == Map.Partition)
+				{
+					await characterEnterMapTask();
+				}
+				else
+				{
+					QueueAction(characterEnterMapTask);
+				}
+			}
+			catch (Exception ex)
+			{
+				logger.Fatal(ex, "Fly map error", ex.Message);
+			}
+			return true;
+		}
 
-        public async Task<bool> SynPositionAsync(ushort x, ushort y, int nMaxDislocation)
+		public async Task<bool> SynPositionAsync(ushort x, ushort y, int nMaxDislocation)
         {
             if (nMaxDislocation <= 0 || x == 0 && y == 0) // ignore in this condition
             {
@@ -4199,8 +4297,9 @@ namespace Long.Kernel.States.User
             Monk = 60,
             Pirate = 70,
             DragonWarrior = 80,
-            Taoist = 100
-        }
+            Taoist = 100,
+            WindWalker = 160,
+		}
 
         public enum PkModeType
         {

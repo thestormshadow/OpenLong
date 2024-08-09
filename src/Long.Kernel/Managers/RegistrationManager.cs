@@ -117,8 +117,14 @@ namespace Long.Kernel.Managers
                         baseClass = BaseClassType.DragonWarrior;
                         break;
                     }
+				case 16:
+				case 17:
+					{
+						baseClass = BaseClassType.WindWalker;
+						break;
+					}
 
-                default:
+				default:
                     {
                         await client.SendAsync(RegisterInvalidProfession);
                         return;

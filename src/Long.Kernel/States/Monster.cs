@@ -360,7 +360,7 @@ namespace Long.Kernel.States
 			return monsterType.AttackRange + sizeAdd;
 		}
 
-		public override bool IsAttackable(Role attacker)
+		public override bool IsAttackable(Role attacker, Magic magic = null)
 		{
 			if (!IsAlive)
 				return false;

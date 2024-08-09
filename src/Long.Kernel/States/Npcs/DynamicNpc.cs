@@ -6,6 +6,7 @@ using Long.Kernel.Managers;
 using Long.Kernel.Modules.Systems.Syndicate;
 using Long.Kernel.Network.Game.Packets;
 using Long.Kernel.Scripting.Action;
+using Long.Kernel.States.Magics;
 using Long.Kernel.States.User;
 using Long.Shared.Mathematics;
 using static Long.Kernel.States.Magics.Magic;
@@ -299,7 +300,7 @@ namespace Long.Kernel.States.Npcs
 			return !deathTimer.IsActive();
 		}
 
-		public override bool IsAttackable(Role attacker)
+		public override bool IsAttackable(Role attacker, Magic magic = null)
 		{
 			if (!IsSynFlag() && !IsCtfFlag() && !IsGoal() && !IsCityGate())
 			{

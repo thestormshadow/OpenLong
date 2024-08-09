@@ -3,6 +3,7 @@ using Long.Kernel.Managers;
 using Long.Kernel.Modules.Systems.Team;
 using Long.Kernel.Network.Game.Packets;
 using Long.Kernel.Processors;
+using Long.Kernel.States.Events;
 using Long.Kernel.States.Items;
 using Long.Kernel.States.Magics;
 using Long.Kernel.States.Npcs;
@@ -12,6 +13,7 @@ using Long.Kernel.States.World;
 using Long.Network.Packets;
 using Long.Shared.Managers;
 using Long.Shared.Mathematics;
+using Long.World.Enums;
 using Long.World.Map;
 using Long.World.Roles;
 using System.Drawing;
@@ -129,63 +131,85 @@ namespace Long.Kernel.States
 			Map = null;
         }
 
-        #endregion
+		#endregion
 
-        #region Movement
-        
-        public async Task<bool> JumpPosAsync(int x, int y, bool sync = false)
-        {
-            if (x == X && y == Y)
-            {
-                return false;
-            }
+		#region Movement
 
-            if (Map == null || !Map.IsValidPoint(x, y))
-            {
-                return false;
-            }
+		public async Task<bool> JumpPosAsync(int x, int y, bool sync = false)
+		{
+			if (x == X && y == Y)
+			{
+				return false;
+			}
 
-            if (IsPlayer())
-            {
-                Character user = (Character)this;
-                if (!Map.IsStandEnable(x, y) || !user.IsJumpPass(x, y, MAX_JUMP_ALTITUDE))
-                {
-                    await user.SendAsync(StrInvalidCoordinate, TalkChannel.TopLeft, Color.Red);
-                    await user.KickbackAsync();
-                    return false;
-                }
+			if (Map == null || !Map.IsValidPoint(x, y))
+			{
+				return false;
+			}
 
-                if (Map.IsRaceTrack())
-                {
-                    await user.KickbackAsync();
-                    return false;
-                }
-            }
+			Character user = null;
+			if (IsPlayer())
+			{
+				user = (Character)this;
+				if (!Map.IsStandEnable(x, y) || !user.IsJumpPass(x, y, MAX_JUMP_ALTITUDE))
+				{
+					await user.SendAsync(StrInvalidCoordinate, TalkChannel.TopLeft, Color.Red);
+					await user.KickbackAsync();
+					return false;
+				}
 
-            Map.EnterBlock(this, x, y, X, Y);
+				if (EventManager.IsInEventMap(GameEvent.EventType.CaptureTheFlag, user)
+					&& QueryStatus(StatusSet.CTF_FLAG) != null
+					&& Map.QueryRegion(RegionType.FlagProtection, (ushort)x, (ushort)y))
+				{
+					await user.KickbackAsync();
+					return false;
+				}
 
-            Direction = (FacingDirection)Calculations.GetDirectionSector(X, Y, x, y);
+				if (Map.IsRaceTrack())
+				{
+					await user.KickbackAsync();
+					return false;
+				}
 
-            if (sync)
-            {
-                await BroadcastRoomMsgAsync(new MsgAction
-                {
-                    CommandX = (ushort)x,
-                    CommandY = (ushort)y,
-                    X = currentX,
-                    Y = currentY,
-                    Identity = Identity,
-                    Action = ActionType.MapJump,
-                    Direction = (ushort)Direction
-                }, true);
-            }
+				if (user.QueryStatus(StatusSet.RIDING) != null)
+				{
+					int distance = user.GetDistance(x, y);
+					int vigorConsume = distance;
+					if (vigorConsume > 0 && vigorConsume > user.Vigor)
+					{
+						await user.KickbackAsync();
+						return false;
+					}
 
-            currentX = (ushort)x;
-            currentY = (ushort)y;
-            return true;
-        }
+					await AddAttributesAsync(ClientUpdateType.Vigor, vigorConsume * -1);
+				}
+			}
 
-        public async Task<bool> MoveTowardAsync(int direction, int mode, bool sync = false)
+			Map.EnterBlock(this, x, y, X, Y);
+
+			Direction = (FacingDirection)Calculations.GetDirectionSector(X, Y, x, y);
+
+			if (sync)
+			{
+				await BroadcastRoomMsgAsync(new MsgAction
+				{
+					CommandX = (ushort)x,
+					CommandY = (ushort)y,
+					X = currentX,
+					Y = currentY,
+					Identity = Identity,
+					Action = ActionType.MapJump,
+					Direction = (ushort)Direction
+				}, true);
+			}
+
+			currentX = (ushort)x;
+			currentY = (ushort)y;
+			return true;
+		}
+
+		public async Task<bool> MoveTowardAsync(int direction, int mode, bool sync = false)
         {
             if (Map == null)
             {
@@ -561,7 +585,7 @@ namespace Long.Kernel.States
 			return sizeAdd + 1;
 		}
 
-		public virtual bool IsAttackable(Role attacker)
+		public virtual bool IsAttackable(Role attacker, Magic magic = null)
 		{
 			return true;
 		}

@@ -14,6 +14,8 @@ using Long.Network.Packets.Ai;
 using Long.Game.Network.Ai.Packets;
 using Long.Kernel.Network.Ai;
 using Long.Kernel.States.Magics;
+using static Long.Kernel.States.Events.GameEvent;
+using Long.Kernel.States.Events;
 
 namespace Long.Kernel.Network.Game.Packets
 {
@@ -672,13 +674,14 @@ namespace Long.Kernel.Network.Game.Packets
                             return;
                         }
 
-                        if (role.Map.Identity == 2057 && role.HasFlagCTF())
+						GameEvent game = user.GetCurrentEvent();
+						if (game != null)
                         {
-							if (role is Character player)
+							if (role is Character player && !await game.OnMove(player, Move.Jump))
 							{
 								await player.KickbackAsync();
-							}
-							return;
+								return;
+							}							
 						}
 
                         ushort newX = (ushort)Command;

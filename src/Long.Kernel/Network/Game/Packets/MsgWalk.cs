@@ -2,10 +2,12 @@
 using Long.Kernel.Managers;
 using Long.Kernel.Network.Ai;
 using Long.Kernel.States;
+using Long.Kernel.States.Events;
 using Long.Kernel.States.User;
 using Long.Network.Packets;
 using Long.Network.Packets.Ai;
 using ProtoBuf;
+using static Long.Kernel.States.Events.GameEvent;
 
 namespace Long.Kernel.Network.Game.Packets
 {
@@ -73,7 +75,29 @@ namespace Long.Kernel.Network.Game.Packets
 
             if (client != null && Data.Identity == user.Identity)
             {
-                await user.ProcessOnMoveAsync();
+				GameEvent game = user.GetCurrentEvent();
+				if (game != null)
+				{
+                    switch ((RoleMoveMode)Data.Mode)
+                    {
+                        case RoleMoveMode.Walk:
+							if (!await game.OnMove(user, Move.Walk))
+							{
+								await user.KickbackAsync();
+								return;
+							}
+							break;
+                        case RoleMoveMode.Run:
+							if (!await game.OnMove(user, Move.Run))
+							{
+								await user.KickbackAsync();
+								return;
+							}
+							break;
+                    }		
+				}
+
+				await user.ProcessOnMoveAsync();
 
                 bool moved = await user.MoveTowardAsync((int)Data.Direction, (int)Data.Mode);
                 if (moved)
