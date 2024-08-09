@@ -9,7 +9,6 @@ using Long.Kernel.States.Events.Interfaces;
 using Long.Kernel.States.Magics;
 using Long.Kernel.States.User;
 using Long.Module.Qualifying.Network;
-using Long.Module.Qualifying.Network.States;
 using Long.Module.Qualifying.Repositories;
 using Long.Shared.Managers;
 using Serilog;
@@ -17,11 +16,12 @@ using System.Collections.Concurrent;
 using System.Drawing;
 using static Long.Module.Qualifying.Network.MsgQualifierWitness;
 using static Long.Kernel.GlobalConstants;
+using Long.Module.Qualifying.States.UserQualifier;
 
-namespace Long.Module.Qualifying.States.UserQualifier
+namespace Long.Module.Qualifying.States
 {
-    public sealed class ArenaQualifier : GameEvent, IWitnessEvent
-    {
+    public sealed class ArenaQualifier : GameEvent, IWitnessEvent, IQualifier
+	{
         private static readonly ILogger logger = Log.ForContext<ArenaQualifier>();
 
         public const int MIN_LEVEL = 70;
@@ -75,7 +75,7 @@ namespace Long.Module.Qualifying.States.UserQualifier
                 .ThenByDescending(x => x.DayWins)
                 .ThenBy(x => x.DayLoses))
             {
-				QualifierInformation QualifierInformation = new QualifierInformation(dbQualifier);
+                QualifierInformation QualifierInformation = new QualifierInformation(dbQualifier);
                 if (!await QualifierInformation.InitializeAsync())
                 {
                     continue;
@@ -89,10 +89,10 @@ namespace Long.Module.Qualifying.States.UserQualifier
                 }
             }
 
-			dbQualifiers = await QualifierRepository.GetAsync(DateTime.Now, 0);
+            dbQualifiers = await QualifierRepository.GetAsync(DateTime.Now, 0);
             foreach (var dbQualifier in dbQualifiers)
             {
-				QualifierInformation QualifierInformation = new QualifierInformation(dbQualifier);
+                QualifierInformation QualifierInformation = new QualifierInformation(dbQualifier);
                 if (!await QualifierInformation.InitializeAsync())
                 {
                     continue;
@@ -354,11 +354,11 @@ namespace Long.Module.Qualifying.States.UserQualifier
             Character user = RoleManager.GetUser(idUser);
 
             LeaveQueue(idUser);
-			
-			if (user != null)
+
+            if (user != null)
             {
-				await user.SignOutEventAsync(this);
-				user.QualifierStatus = ArenaStatus.NotSignedUp;
+                await user.SignOutEventAsync(this);
+                user.QualifierStatus = ArenaStatus.NotSignedUp;
             }
 
             return true;

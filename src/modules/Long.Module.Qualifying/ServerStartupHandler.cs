@@ -1,6 +1,7 @@
 ﻿using Long.Kernel.Managers;
 using Long.Kernel.Modules.Interfaces;
-using Long.Module.Qualifying.States.UserQualifier;
+using Long.Module.Qualifying.Network.States;
+using Long.Module.Qualifying.States;
 
 namespace Long.Module.Qualifying
 {
@@ -11,9 +12,10 @@ namespace Long.Module.Qualifying
             return Task.CompletedTask;
         }
 
-        public Task<bool> OnServerStartupAsync()
+        public async Task<bool> OnServerStartupAsync()
         {
-			return EventManager.RegisterEventAsync(new ArenaQualifier());
+			await EventManager.RegisterEventAsync(new TeamArenaQualifier());
+			return await EventManager.RegisterEventAsync(new ArenaQualifier());
 		}
     }
 }

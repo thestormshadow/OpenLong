@@ -1055,6 +1055,12 @@ namespace Long.Kernel.Network.Game.Packets
 							return true;
 						}
 
+                    case "test":
+                        {
+                            var a = user.TeamQualifierRank;
+							return true;
+						}
+
 					#region DEBUG test commands
 
 #if DEBUG

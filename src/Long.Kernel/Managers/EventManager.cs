@@ -19,7 +19,7 @@ public class EventManager
 
     private static readonly ConcurrentDictionary<uint, DbAction> actions = new();
     private static readonly ConcurrentDictionary<uint, DbTask> tasks = new();
-    private static readonly ConcurrentDictionary<GameEvent.EventType, GameEvent> events = new();
+    private static readonly ConcurrentDictionary<GameEvent.EventType, IGameEvent> events = new();
     private static readonly List<QueuedAction> queuedActions = new();
     private static readonly ConcurrentDictionary<uint, DbConfig> inviteTrans = new();
 
@@ -286,14 +286,23 @@ public class EventManager
         return events.Values.FirstOrDefault(x => x.GetType() == typeof(T)) as T;
     }
 
+	public static T GetIEvent<T>() where T: IGameEvent
+	{
+		return (T)events.Values.FirstOrDefault(x => x is T);
+	}
+
 	public static GameEvent GetEvent(GameEvent.EventType type)
     {
-        return events.TryGetValue(type, out GameEvent ev) ? ev : null;
+        if (events.TryGetValue(type, out IGameEvent ev))
+        {
+			return ev as GameEvent;
+		}
+        return null;
     }
 
 	public static GameEvent GetEvent(uint idMap)
     {
-        return events.Values.FirstOrDefault(x => x.Map?.Identity == idMap);
+        return events.Values.FirstOrDefault(x => x.Map?.Identity == idMap) as GameEvent;
     }
 
     public static async Task BulletinInvitationAsync(Character user, uint eventId)

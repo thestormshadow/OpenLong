@@ -1,6 +1,7 @@
 ﻿
 
 using Long.Kernel.Modules.Systems;
+using Long.Kernel.Network.Game.Packets;
 using Long.Kernel.States.Items;
 using Long.Kernel.States.Magics;
 using Long.Kernel.States.User;
@@ -8,7 +9,7 @@ using Long.Kernel.States.World;
 
 namespace Long.Kernel.States.Events
 {
-    public abstract class GameEvent
+    public abstract class GameEvent : IGameEvent
 	{
         protected enum EventStage
         {
@@ -74,13 +75,12 @@ namespace Long.Kernel.States.Events
 
         protected EventStage Stage { get; set; } = EventStage.Idle;
 
-        public virtual GameMap Map { get; protected set; }
+        public virtual GameMap Map { get; set; }
 
         public virtual bool IsInTime { get; } = false;
         public virtual bool IsActive { get; } = false;
         public virtual bool IsEnded { get; } = false;
-
-        public virtual bool IsAttackEnable(Role sender, Magic magic = null) => true;
+		public virtual bool IsAttackEnable(Role sender, Magic magic = null) => true;
 
         public bool ToNextTime() => eventCheck.ToNextTime();
 

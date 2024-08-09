@@ -42,6 +42,10 @@ namespace Long.Module.Qualifying
 				case PacketType.MsgQualifyingWitness:
 					msg = new MsgQualifierWitness();
 					break;
+
+				case PacketType.MsgTeamArenaHeroData: msg = new MsgTeamArenaHeroData(); break;
+				case PacketType.MsgTeamArenaInteractive: msg = new MsgTeamArenaInteractive(); break;
+
 				default:
 					return false;
 			}

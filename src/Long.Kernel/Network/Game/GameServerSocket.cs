@@ -1,6 +1,5 @@
 ﻿using Long.Kernel.Managers;
 using Long.Kernel.Network.Game.Packets;
-using Long.Kernel.Network.Game.Packets.TeamArena;
 using Long.Kernel.Processors;
 using Long.Kernel.Settings;
 using Long.Kernel.States.User;
@@ -152,9 +151,7 @@ namespace Long.Kernel.Network.Game
                     case PacketType.MsgItemRefineOpt: msg = new MsgItemPerfection(); break;
 					case PacketType.MsgItemRefine: msg = new MsgItemPerfectionOperation(); break;
 					case PacketType.MsgLoadMap: msg = new MsgLoadMap(); break;
-                    case PacketType.MsgGLRankingList: msg = new MsgGLRankingList(); break;
-                    case PacketType.MsgTeamArenaHeroData: msg = new MsgQualifierTeamPKStatistic(); break;
-					case PacketType.MsgTeamArenaInteractive: msg = new MsgTeamArenaInteractive(); break;
+                    case PacketType.MsgGLRankingList: msg = new MsgGLRankingList(); break;                    
 
 					default:
                         {

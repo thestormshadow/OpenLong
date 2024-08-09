@@ -8,6 +8,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Network\Game\Packets\TeamArena\**" />
+	  <EmbeddedResource Remove="Network\Game\Packets\TeamArena\**" />
+	  <None Remove="Network\Game\Packets\TeamArena\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\Long.Database\Long.Database.csproj" />
 	  <ProjectReference Include="..\Long.Network\Long.Network.csproj" />
 	  <ProjectReference Include="..\Long.World\Long.World.csproj" />

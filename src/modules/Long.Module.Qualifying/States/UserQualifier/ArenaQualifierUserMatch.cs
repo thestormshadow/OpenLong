@@ -17,7 +17,7 @@ using static Long.Module.Qualifying.Network.MsgQualifierWitness;
 
 namespace Long.Module.Qualifying.States.UserQualifier
 {
-	public sealed class ArenaQualifierUserMatch
+    public sealed class ArenaQualifierUserMatch
     {
 		private static readonly ILogger logger = Log.ForContext<ArenaQualifierUserMatch>();
 
