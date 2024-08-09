@@ -1,12 +1,9 @@
 ﻿using System.Configuration.Internal;
 using System.Drawing;
-using System.Reflection.PortableExecutable;
 using Long.Database.Entities;
 using Long.Game.Network.Ai.Packets;
 using Long.Kernel.Database;
 using Long.Kernel.Managers;
-using Long.Kernel.Modules.Systems.Competion;
-using Long.Kernel.Modules.Systems.Qualifier;
 using Long.Kernel.Modules.Systems.Syndicate;
 using Long.Kernel.Network.Ai;
 using Long.Kernel.Network.Cross.Client.Packets;
@@ -118,8 +115,8 @@ namespace Long.Kernel.Network.Game.Packets
             Message = text;
         }
 
-        // Packet Properties
-        public int Timestamp { get; set; }
+		// Packet Properties
+		public int Timestamp { get; set; }
         public Color Color { get; set; }
         public TalkChannel Channel { get; set; }
         public TalkStyle Style { get; set; }
@@ -1019,14 +1016,44 @@ namespace Long.Kernel.Network.Game.Packets
 							await RoleManager.BroadcastWorldMsgAsync($"{user.Name} has forced Capture The Flag to start!!!", TalkChannel.Talk);
 							return true;
 						}
-
 					case "endctf":
 						{
 							await CTFManager.EndEventAsync();
 							await RoleManager.BroadcastWorldMsgAsync($"{user.Name} has forced Capture The Flag to end!!!", TalkChannel.Talk);
 							return true;
+						}
+					case "joinctf":
+						{
+							await user.SignInEventAsync(GameEvent.EventType.CaptureTheFlag);
+							await RoleManager.BroadcastWorldMsgAsync($"{user.Name} has forced Capture The Flag to start!!!", TalkChannel.Talk);
+							return true;
+						}
+					case "lineskillpkstart":
+						{
+							await LSPKManager.ForceStartup();
+							await RoleManager.BroadcastWorldMsgAsync($"{user.Name} has forced Line Skill PK to start!!!", TalkChannel.Talk);
+							return true;
+						}
 
-						}												
+					case "lineskillpkend":
+						{
+							await LSPKManager.ForceEnd();
+							await RoleManager.BroadcastWorldMsgAsync($"{user.Name} has forced Line Skill PK to end!!!", TalkChannel.Talk);
+							return true;
+
+						}
+
+					case "joinlspk":
+						{
+							await user.SignInEventAsync(GameEvent.EventType.LineSkillPk);
+							return true;
+						}
+
+					case "joinoutlspk":
+						{
+							await user.SignOutEventAsync(GameEvent.EventType.LineSkillPk);
+							return true;
+						}
 
 					#region DEBUG test commands
 

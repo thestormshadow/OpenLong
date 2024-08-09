@@ -36,7 +36,15 @@ namespace Long.Kernel.States.Events
             Limit
         }
 
-        public static bool IsQualifierEvent(EventType type)
+        public Move MoveLevel { get; set; } = Move.Jump;
+        public enum Move : uint
+        {
+            Walk = 0,
+            Run = 1,
+            Jump = 2,
+        }
+
+		public static bool IsQualifierEvent(EventType type)
         {
             switch (type)
             {
@@ -162,11 +170,26 @@ namespace Long.Kernel.States.Events
             return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// Perform daily clean-up on event. MUST NOT CHANGE USER DATA!
-        /// User data is refreshed on their own class, this must clean up the event data!
-        /// </summary>
-        public virtual Task OnDailyResetAsync()
+        public virtual Task<bool> OnEquipItemAsync(Character user, Item item)
+		{
+			return Task.FromResult(true);
+		}
+
+		public virtual Task<bool> OnUnEquipItemAsync(Character user, Item item)
+		{
+			return Task.FromResult(true);
+		}
+
+		public virtual Task<bool> OnMove(Character user, Move moveLevel)
+		{
+			return Task.FromResult(MoveLevel == moveLevel);
+		}
+
+		/// <summary>
+		/// Perform daily clean-up on event. MUST NOT CHANGE USER DATA!
+		/// User data is refreshed on their own class, this must clean up the event data!
+		/// </summary>
+		public virtual Task OnDailyResetAsync()
         {
             return Task.CompletedTask;
         }

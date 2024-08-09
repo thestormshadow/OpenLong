@@ -4,6 +4,7 @@ using Long.Kernel.Database.Repositories;
 using Long.Kernel.Managers;
 using Long.Kernel.Network.Game.Packets;
 using Long.Kernel.Scripting.Action;
+using Long.Kernel.States.Events;
 using Long.Kernel.States.Items;
 using Long.Kernel.States.Npcs;
 using Long.Kernel.States.Status;
@@ -425,7 +426,13 @@ namespace Long.Kernel.States.User
             user.BattleSystem.ResetBattle();
             await user.MagicData.AbortMagicAsync(false);
 
-            if (position == Item.ItemPosition.Inventory)
+			GameEvent game = user.GetCurrentEvent();
+			if (game != null && !await game.OnEquipItemAsync(user, item))
+            {
+				return false;
+			}
+
+			if (position == Item.ItemPosition.Inventory)
             {
                 if (user.IsWing && !item.IsArrowSort())
                 {
@@ -653,6 +660,12 @@ namespace Long.Kernel.States.User
 
             user.BattleSystem.ResetBattle();
             await user.MagicData.AbortMagicAsync(false);
+
+            GameEvent game = user.GetCurrentEvent();
+            if (game != null && !await game.OnUnEquipItemAsync(user, item))
+            {
+				return false;
+			}
 
             if (!IsSecondaryEquipmentUser)
             {

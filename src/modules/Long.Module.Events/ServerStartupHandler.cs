@@ -12,10 +12,13 @@ namespace Long.Module.Events
             return Task.CompletedTask;
         }
 
-        public Task<bool> OnServerStartupAsync()
+        public async Task<bool> OnServerStartupAsync()
         {
 			CTFManager = new Managers.CaptureTheFlagManager();
-			return EventManager.RegisterEventAsync(new CaptureTheFlag());
+			LSPKManager = new Managers.LineSkillPKManager();
+			await EventManager.RegisterEventAsync(new CaptureTheFlag());
+			await EventManager.RegisterEventAsync(new LineSkillPK());
+			return await Task.FromResult(true);
 		}
     }
 }

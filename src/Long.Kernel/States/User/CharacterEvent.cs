@@ -418,12 +418,30 @@ namespace Long.Kernel.States.User
 
 		public async Task<bool> SignInEventAsync(GameEvent e)
 		{
-			if (!e.IsAllowedToJoin(this) || !GameEvents.TryAdd(e.Identity, e))
-			{
-				return false;
+			if (!GameEvents.TryGetValue(e.Identity, out _))
+			{			
+				if (!e.IsAllowedToJoin(this) || !GameEvents.TryAdd(e.Identity, e))
+				{
+					return false;
+				}
 			}
 
 			await e.OnEnterAsync(this);
+			return true;
+		}
+
+		public async Task<bool> SignInEventAsync(GameEvent.EventType e)
+		{
+			GameEvent gameEvent = EventManager.GetEvent(e);
+			if (!GameEvents.TryGetValue(gameEvent.Identity, out _))
+			{
+				if (!gameEvent.IsAllowedToJoin(this) || !GameEvents.TryAdd(gameEvent.Identity, gameEvent))
+				{
+					return false;
+				}
+			}
+
+			await gameEvent.OnEnterAsync(this);
 			return true;
 		}
 
@@ -432,6 +450,16 @@ namespace Long.Kernel.States.User
 			if (GameEvents.TryRemove(e.Identity, out _))
 			{
 				await e.OnExitAsync(this);
+			}
+			return true;
+		}
+
+		public async Task<bool> SignOutEventAsync(GameEvent.EventType e)
+		{
+			GameEvent gameEvent = EventManager.GetEvent(e);
+			if (GameEvents.TryRemove(gameEvent.Identity, out _))
+			{
+				await gameEvent.OnExitAsync(this);
 			}
 			return true;
 		}
@@ -501,6 +529,248 @@ namespace Long.Kernel.States.User
 			}
 			return false;
 		}
+
+		#endregion
+
+		#region Horse Racing
+
+		private const ushort SCREAM_BOMB_MAGICTYPE = 9988;
+		private const ushort SLUGISH_POTION_MAGICTYPE = 9989;
+
+		//private KeyValuePair<ItemType, int>[] raceItems = new KeyValuePair<ItemType, int>[5];
+
+		//public async Task<bool> AwardRaceItemAsync(ItemType itemType)
+		//{
+		//	for (int i = 0; i < raceItems.Length; i++)
+		//	{
+		//		if (raceItems[i].Key == ItemType.Null || raceItems[i].Key == 0 || raceItems[i].Key == itemType)
+		//		{
+		//			if (raceItems[i].Key != itemType)
+		//			{
+		//				raceItems[i] = new KeyValuePair<ItemType, int>(itemType, 1);
+		//			}
+		//			else
+		//			{
+		//				raceItems[i] = new KeyValuePair<ItemType, int>(itemType, raceItems[i].Value + 1);
+		//			}
+
+		//			await SendAsync(new MsgRaceTrackProp
+		//			{
+		//				Amount = (ushort)raceItems[i].Value,
+		//				PotionType = itemType,
+		//				Index = i + 1
+		//			});
+		//			return true;
+		//		}
+		//	}
+		//	return false;
+		//}
+
+		//public async Task SpendRaceItemAsync(int index, Role target = null)
+		//{
+		//	if (raceItems[index].Key == ItemType.Null || raceItems[index].Key == 0)
+		//	{
+		//		return;
+		//	}
+
+		//	if (raceItems[index].Value <= 0)
+		//	{
+		//		raceItems[index] = new KeyValuePair<ItemType, int>();
+		//		return;
+		//	}
+
+		//	var itemType = raceItems[index].Key;
+		//	int power = QueryStatus((int)itemType)?.Power ?? 0;
+
+		//	await DetachStatusAsync((int)itemType);
+
+		//	if (raceItems[index].Value - 1 > 0)
+		//	{
+		//		raceItems[index] = new KeyValuePair<ItemType, int>(raceItems[index].Key, raceItems[index].Value - 1);
+		//	}
+		//	else
+		//	{
+		//		raceItems[index] = new KeyValuePair<ItemType, int>();
+		//	}
+		//	await SendAsync(new MsgRaceTrackProp
+		//	{
+		//		Amount = (ushort)raceItems[index].Value,
+		//		PotionType = itemType,
+		//		Index = index + 1
+		//	});
+
+		//	switch (itemType)
+		//	{
+		//		case ItemType.ChaosBomb:
+		//			{
+		//				var magicType = MagicManager.GetMagictype(SCREAM_BOMB_MAGICTYPE, 0);
+		//				if (magicType == null)
+		//				{
+		//					break;
+		//				}
+
+		//				MsgMagicEffect msg = new MsgMagicEffect
+		//				{
+		//					AttackerIdentity = Identity,
+		//					MapX = X,
+		//					MapY = Y,
+		//					MagicIdentity = (ushort)magicType.Type
+		//				};
+		//				List<Character> targets = new List<Character>();
+		//				foreach (var targetUser in Screen.Roles.Values.Where(x => x is Character).Cast<Character>())
+		//				{
+		//					if (targetUser.GetDistance(this) < magicType.Distance)
+		//					{
+		//						msg.Append(targetUser.Identity, 1, true);
+		//						targets.Add(targetUser);
+		//					}
+		//				}
+		//				await BroadcastRoomMsgAsync(msg, true);
+
+		//				foreach (var targetUser in targets)
+		//				{
+		//					await targetUser.AttachStatusAsync(StatusSet.CONFUSED, 0, 10, 0);
+		//				}
+		//				break;
+		//			}
+		//		case ItemType.SpiritPotion:
+		//			{
+		//				break;
+		//			}
+		//		case ItemType.ExcitementPotion:
+		//			{
+		//				await DetachStatusAsync(StatusSet.DECELERATED);
+		//				await AttachStatusAsync(StatusSet.ACCELERATED, 50, 15, 0);
+		//				break;
+		//			}
+		//		case ItemType.ScreamBomb:
+		//			{
+		//				var magicType = MagicManager.GetMagictype(SCREAM_BOMB_MAGICTYPE, 0);
+		//				if (magicType == null)
+		//				{
+		//					break;
+		//				}
+
+		//				MsgMagicEffect msg = new MsgMagicEffect
+		//				{
+		//					AttackerIdentity = Identity,
+		//					MapX = X,
+		//					MapY = Y,
+		//					MagicIdentity = (ushort)magicType.Type
+		//				};
+		//				List<Character> targets = new List<Character>();
+		//				foreach (var targetUser in Screen.Roles.Values.Where(x => x is Character).Cast<Character>())
+		//				{
+		//					if (targetUser.GetDistance(this) < magicType.Distance)
+		//					{
+		//						msg.Append(targetUser.Identity, 1, true);
+		//						targets.Add(targetUser);
+		//					}
+		//				}
+		//				await BroadcastRoomMsgAsync(msg, true);
+
+		//				foreach (var targetUser in targets)
+		//				{
+		//					await targetUser.AttachStatusAsync(StatusSet.FRIGHTENED, 0, 10, 0);
+		//				}
+		//				break;
+		//			}
+		//		case ItemType.SluggishPotion:
+		//			{
+		//				var magicType = MagicManager.GetMagictype(SLUGISH_POTION_MAGICTYPE, 0);
+		//				if (magicType == null)
+		//				{
+		//					break;
+		//				}
+
+		//				MsgMagicEffect msg = new MsgMagicEffect
+		//				{
+		//					AttackerIdentity = Identity,
+		//					MapX = X,
+		//					MapY = Y,
+		//					MagicIdentity = (ushort)magicType.Type
+		//				};
+		//				List<Character> targets = new List<Character>();
+		//				foreach (var targetUser in Screen.Roles.Values.Where(x => x is Character).Cast<Character>())
+		//				{
+		//					if (targetUser.GetDistance(this) < magicType.Distance)
+		//					{
+		//						msg.Append(targetUser.Identity, 1, true);
+		//						targets.Add(targetUser);
+		//					}
+		//				}
+		//				await BroadcastRoomMsgAsync(msg, true);
+
+		//				foreach (var targetUser in targets)
+		//				{
+		//					await targetUser.AttachStatusAsync(StatusSet.DECELERATED, 50, 10, 0);
+		//				}
+		//				break;
+		//			}
+		//		case ItemType.GuardPotion:
+		//			{
+		//				await AttachStatusAsync(StatusSet.GODLY_SHIELD, 0, 10, 0);
+		//				break;
+		//			}
+		//		case ItemType.DizzyHammer:
+		//			{
+		//				if (target is Character targetUser)
+		//				{
+		//					await target.AttachStatusAsync(StatusSet.DIZZY, 0, 5, 0);
+		//				}
+		//				break;
+		//			}
+		//		case ItemType.TransformItem:
+		//			{
+		//				for (int i = 0; i < raceItems.Length; i++)
+		//				{
+		//					var item = raceItems[i];
+
+		//					if (item.Key == 0 || item.Key == ItemType.Null) continue;
+
+		//					ItemType old = item.Key;
+		//					int min = (int)ItemType.ChaosBomb;
+		//					int max = (int)ItemType.SuperExcitementPotion;
+		//					item = new KeyValuePair<ItemType, int>((ItemType)await NextAsync(min, max), item.Value);
+
+		//					if (old == item.Key || item.Key == ItemType.TransformItem || item.Key == (ItemType)8333) // no frozen trap
+		//					{
+		//						i--;
+		//						continue;
+		//					}
+
+		//					raceItems[i] = item;
+
+		//					await SendAsync(new MsgRaceTrackProp
+		//					{
+		//						Amount = (ushort)item.Value,
+		//						PotionType = item.Key,
+		//						Index = i + 1
+		//					});
+		//				}
+		//				break;
+		//			}
+		//		case ItemType.RestorePotion:
+		//			{
+		//				await AddAttributesAsync(ClientUpdateType.Vigor, power);
+		//				break;
+		//			}
+		//		case ItemType.SuperExcitementPotion:
+		//			{
+		//				await DetachStatusAsync(StatusSet.DECELERATED);
+		//				await AttachStatusAsync(StatusSet.ACCELERATED, 200, 15, 0);
+		//				break;
+		//			}
+		//	}
+		//}
+
+		//public async Task ClearRaceItemsAsync()
+		//{
+		//	for (int i = 0; i < raceItems.Length; i++)
+		//	{
+		//		raceItems[i] = new KeyValuePair<ItemType, int>();
+		//	}
+		//}
 
 		#endregion
 	}

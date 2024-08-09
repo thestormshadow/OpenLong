@@ -78,8 +78,10 @@ namespace Long.Module.Events.States
         private readonly TimeOutMS rankingRefreshTimer = new();
 
         private const int CTF_MAP_ID = 2057;
+		private const int CTF_MAP_X = 482;
+		private const int CTF_MAP_Y = 367;
 
-        public CaptureTheFlag()
+		public CaptureTheFlag()
             : base("Capture The Flag", 1000)
         {
         }
@@ -244,7 +246,26 @@ namespace Long.Module.Events.States
             });
         }
 
-        public override async Task OnBeKillAsync(Role attacker, Role target, Magic magic = null)
+        public override async Task<bool> OnMove(Character user, Move moveLevel)
+        {
+            switch (moveLevel)
+            {
+                case Move.Walk:
+				case Move.Run:                
+					return true;
+                case Move.Jump:
+                    {
+						if (user.HasFlagCTF())						
+							return false;
+                        
+                        return true;
+					}
+                default:
+					return true;
+            }
+        }
+		public override bool IsInEventMap(uint idMap) => CTF_MAP_ID == idMap;
+		public override async Task OnBeKillAsync(Role attacker, Role target, Magic magic = null)
         {
             if (target is DynamicNpc dynamicNpc)
             {
@@ -768,7 +789,13 @@ namespace Long.Module.Events.States
             return user.SendAsync(msg);
         }
 
-        public int SynUserCount(uint idSyn)
+		public async override Task OnEnterAsync(Character sender)
+		{
+			if (sender.Map.Identity != CTF_MAP_ID)
+				await sender.FlyMapAsync(CTF_MAP_ID, CTF_MAP_X, CTF_MAP_Y);
+		}
+
+		public int SynUserCount(uint idSyn)
         {
             return Map.QueryRoles(x => x is Character user && user.SyndicateIdentity == idSyn).Count;
         }

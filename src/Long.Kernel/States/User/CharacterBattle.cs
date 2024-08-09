@@ -2095,7 +2095,7 @@ namespace Long.Kernel.States.User
 			return true;
 		}
 
-		public override bool IsAttackable(Role attacker)
+		public override bool IsAttackable(Role attacker, Magic magic = null)
 		{
 			if (protectionTimer.IsActive() && !protectionTimer.IsTimeOut())
 			{
@@ -2113,7 +2113,7 @@ namespace Long.Kernel.States.User
 			}
 
 			var currentEvent = GetCurrentEvent();
-			if (currentEvent != null && !currentEvent.IsAttackEnable(this))
+			if (currentEvent != null && !currentEvent.IsAttackEnable(this, magic))
 			{
 				return false;
 			}

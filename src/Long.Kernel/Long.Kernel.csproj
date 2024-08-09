@@ -26,6 +26,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Modules\Systems\Competion\" />
 	  <Folder Include="Modules\Systems\Lottery\" />
 	  <Folder Include="Modules\Systems\DetainEquip\" />
 	  <Folder Include="Modules\Systems\ElitePKArenic\" />

@@ -134,8 +134,9 @@ namespace Long.Kernel.Modules.Systems.Syndicate
             Monk = 32,
             Pirate = 64,
             DragonWarrior = 128,
+			WindWalker = 256,
 
-            All = Trojan | Warrior | Taoist | Archer | Ninja | Monk | Pirate | DragonWarrior
-        }
+			All = Trojan | Warrior | Taoist | Archer | Ninja | Monk | Pirate | DragonWarrior | WindWalker
+		}
     }
 }
