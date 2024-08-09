@@ -3,6 +3,7 @@ using Long.Kernel.Database.Repositories;
 using Long.Kernel.Managers;
 using Long.Kernel.Modules.Systems.Qualifier;
 using Long.Kernel.Modules.Systems.TaskDetail;
+using Long.Kernel.Modules.Systems.Team;
 using Long.Kernel.Network.Game.Packets;
 using Long.Kernel.States.Events;
 using Long.Kernel.States.MessageBoxes;
@@ -472,7 +473,7 @@ namespace Long.Kernel.States.User
 		#endregion
 
 		#region Arena Qualifier
-
+		public int QualifierRank => EventManager.GetIEvent<IQualifier>()?.GetPlayerRanking(Identity) ?? 0;
 		public ArenaStatus QualifierStatus { get; set; } = ArenaStatus.NotSignedUp;
 
 		public uint QualifierPoints
@@ -528,6 +529,46 @@ namespace Long.Kernel.States.User
 					return true;
 			}
 			return false;
+		}
+
+		#endregion
+
+		#region Team Arena Qualifier
+
+		public int TeamQualifierRank => EventManager.GetIEvent<ITeamQualifier>()?.GetPlayerRanking(Identity) ?? 0;
+
+		public ArenaStatus TeamQualifierStatus => Team.QualifierStatus;
+
+		public uint TeamQualifierPoints
+		{
+			get => user.TeamAthletePoint;
+			set => user.TeamAthletePoint = value;
+		}
+
+		public uint TeamQualifierDayWins
+		{
+			get => user.TeamAthleteDayWins;
+			set => user.TeamAthleteDayWins = value;
+		}
+
+		public uint TeamQualifierDayLoses
+		{
+			get => user.TeamAthleteDayLoses;
+			set => user.TeamAthleteDayLoses = value;
+		}
+
+		public uint TeamQualifierDayGames => QualifierDayWins + QualifierDayLoses;
+
+		public uint TeamQualifierHistoryWins
+		{
+			get => user.TeamAthleteHistoryWins;
+			set => user.TeamAthleteHistoryWins = value;
+		}
+
+		public uint TeamQualifierHistoryLoses
+		{
+			get => user.TeamAthleteHistoryLoses;
+			set => user.TeamAthleteHistoryLoses = value;
 		}
 
 		#endregion

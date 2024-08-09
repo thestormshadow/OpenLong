@@ -4,10 +4,10 @@ using Long.Kernel.Database.Repositories;
 using Long.Kernel.States.User;
 using System.Globalization;
 
-namespace Long.Module.Qualifying.Network.States
+namespace Long.Module.Qualifying.States.UserQualifier
 {
     public sealed class QualifierInformation
-	{
+    {
         private readonly DbArenic arenic;
 
         public QualifierInformation(DbArenic arenic)
@@ -39,33 +39,33 @@ namespace Long.Module.Qualifying.Network.States
 
         public DateTime Date => DateTime.ParseExact(arenic.Date.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
 
-        public uint AthletePoint 
+        public uint AthletePoint
         {
-            get => arenic.AthletePoint; 
+            get => arenic.AthletePoint;
             set => arenic.AthletePoint = value;
         }
 
-        public uint CurrentHonor 
+        public uint CurrentHonor
         {
             get => arenic.CurrentHonor;
             set => arenic.CurrentHonor = value;
         }
 
-        public uint HistoryHonor 
+        public uint HistoryHonor
         {
             get => arenic.HistoryHonor;
             set => arenic.HistoryHonor = value;
         }
 
-        public uint DayWins 
+        public uint DayWins
         {
             get => arenic.DayWins;
             set => arenic.DayWins = value;
         }
 
-        public uint DayLoses 
+        public uint DayLoses
         {
-            get => arenic.DayLoses; 
+            get => arenic.DayLoses;
             set => arenic.DayLoses = value;
         }
 
@@ -86,12 +86,12 @@ namespace Long.Module.Qualifying.Network.States
 
         public Task<bool> SaveAsync()
         {
-            return ServerDbContext.UpdateAsync(this.arenic);
+            return ServerDbContext.UpdateAsync(arenic);
         }
 
         public Task<bool> DeleteAsync()
         {
-            return ServerDbContext.DeleteAsync(this.arenic);
+            return ServerDbContext.DeleteAsync(arenic);
         }
     }
 }

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Long.Kernel.Modules.Systems.Qualifier
 {
-	public interface IQualifier : IGameEvent
+	public interface ITeamQualifier : IGameEvent
 	{
-		public bool IsInsideMatch(uint idUser);
 		public int GetPlayerRanking(uint idUser);
 	}
 }

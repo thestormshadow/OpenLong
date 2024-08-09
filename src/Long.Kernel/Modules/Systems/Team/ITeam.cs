@@ -1,4 +1,5 @@
 ﻿using Long.Database.Entities;
+using Long.Kernel.Modules.Systems.Qualifier;
 using Long.Kernel.Network.Game.Packets;
 using Long.Kernel.States;
 using Long.Kernel.States.User;
@@ -11,7 +12,7 @@ namespace Long.Kernel.Modules.Systems.Team
     {
         Character Leader { get; }
         ICollection<Character> Members { get; }
-
+        public ArenaStatus QualifierStatus { get; set; }
         uint TeamId { get; }
         int MemberCount { get; }
 

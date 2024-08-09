@@ -1,6 +1,7 @@
 ﻿using Long.Kernel.Modules.Systems.Qualifier;
 using Long.Kernel.Network.Game;
 using Long.Kernel.States.User;
+using Long.Module.Qualifying.States;
 using Long.Module.Qualifying.States.UserQualifier;
 using Long.Network.Packets;
 

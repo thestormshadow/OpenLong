@@ -3,7 +3,7 @@ using Long.Kernel.Database.Repositories;
 using Long.Kernel.Managers;
 using Long.Kernel.Network.Game;
 using Long.Kernel.States.User;
-using Long.Module.Qualifying.States.UserQualifier;
+using Long.Module.Qualifying.States;
 using Long.Network.Packets;
 
 namespace Long.Module.Qualifying.Network

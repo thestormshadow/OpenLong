@@ -1,5 +1,6 @@
 ﻿using Long.Database.Entities;
 using Long.Kernel.Managers;
+using Long.Kernel.Modules.Systems.Qualifier;
 using Long.Kernel.Modules.Systems.Team;
 using Long.Kernel.Network.Game.Packets;
 using Long.Kernel.States;
@@ -44,7 +45,9 @@ namespace Long.Module.Team.States
         public uint TeamId { get; private set; }
         public int MemberCount => players.Count;
 
-        ~Team()
+        public ArenaStatus QualifierStatus { get; set; } = ArenaStatus.NotSignedUp;
+
+		~Team()
         {
             TeamManager.Disband(TeamId);
         }
